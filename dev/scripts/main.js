@@ -7,6 +7,7 @@ const app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
 
 
 
+
 app.latLong = [];
 
 app.getGeolocation = function(){
@@ -59,4 +60,12 @@ app.getGeolocation = function(){
         }
     }
 };
+
+app.init = function (){
+
+};
+
+$(function(){
+    app.init()
+});
 
