@@ -81,7 +81,10 @@ app.getCityByName = function (name){
         headers: {
             'user-key': app.apiKey
         }, 
-        q: name
+        data: {
+            q: name,
+            count: 20  
+        }
       })
       .then(function(cityMatch){
       console.log(cityMatch);
