@@ -24,11 +24,11 @@ app.getGeolocation = function(){
     maximumAge: 0 
     };
     function success(pos){
-        var latitude = pos.coords.latitude;
-        var longitude = pos.coords.longitude;
+        var latitude = Math.round(pos.coords.latitude * 100) / 100;
+        var longitude = Math.round(pos.coords.longitude * 100) / 100;
         // Push lat and long into an array (Leaftlet map requires array)
         app.latLong = [latitude, longitude];
-        console.log(latLong);
+        console.log(app.latLong);
         // Add jQuery for hiding loading icon/overlay
     
         // Pass user coordinates to Leaflet to render map
