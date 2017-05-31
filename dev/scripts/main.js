@@ -1,8 +1,10 @@
+
 const app = {};
 
 app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
 
 app.latLong = [];
+
 
 //ask user for geolocation
 app.getGeolocation = function(){
@@ -25,6 +27,7 @@ app.getGeolocation = function(){
         var longitude = pos.coords.longitude;
         // Push lat and long into an array (Leaftlet map requires array)
         app.latLong = [latitude, longitude];
+        console.log(latLong);
         // Add jQuery for hiding loading icon/overlay
     
         // Pass user coordinates to Leaflet to render map
@@ -70,6 +73,7 @@ app.getCityId = function (){
       })
 };
 
+
 //once you have City ID, call AJAX request for cuisines
 app.getRestaurantCuisine = function (){
   $.ajax({
@@ -97,11 +101,22 @@ app.getRefinedRestaurants = function (){
 
 
 
+
+
+app.events = function(){
+    $(".locator").on("click", function(){
+    app.getGeolocation();
+    });
+};
+
+
+
 app.init = function (){
+    app.events();
 
 };
 
 $(function(){
-    app.init()
+    app.init();
 });
 
