@@ -65,6 +65,7 @@ app.updateCity = function () {
   $('#form').on('submit', function(e){
     e.preventDefault();
     inputOfCity = $('#cityInput').val();
+    console.log(inputOfCity);
     //pass in city input to cities AJAX request
     app.getCityByName(inputOfCity);
   })  
@@ -74,19 +75,24 @@ app.updateCity = function () {
 //if geolocation is used skip this step
 app.getCityByName = function (name){
   //store updated city into newCity var
-  return $.ajax({
-        url: 'https://developers.zomato.com/api/v2.1/cities',
+  $.ajax({
+        url: `https://developers.zomato.com/api/v2.1/cities`,
         method: 'GET',
         dataType: 'json',
         headers: {
             'user-key': app.apiKey
-        }, 
-        q: name
+        },
+        data: {
+          q: name,
+          count: 20,
+        }
       })
       .then(function(cityMatch){
       console.log(cityMatch);
     })
   }
+
+  app.getCityByName();
 
 
 
