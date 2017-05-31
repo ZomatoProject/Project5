@@ -1,15 +1,10 @@
 const app = {};
 
-const app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
-
-//Ajax request for location
-
-
-
-
+app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
 
 app.latLong = [];
 
+//ask user for geolocation
 app.getGeolocation = function(){
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(success, error, options);
@@ -58,8 +53,49 @@ app.getGeolocation = function(){
             // Timed out
             alert('Timed out');
         }
-    }
+    }  
 };
+
+
+//get restaurant ID if geolocation is NOT used
+//if geolocation is used skip this step
+app.getCityId = function (){
+  $.ajax({
+        url: 'https://developers.zomato.com/api/v2.1/cities',
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            'user-key': app.apiKey
+        }
+      })
+};
+
+//once you have City ID, call AJAX request for cuisines
+app.getRestaurantCuisine = function (){
+  $.ajax({
+        url: 'https://developers.zomato.com/api/v2.1/cuisines',
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            'user-key': app.apiKey
+        }
+      })
+};
+
+//use cuisine in search endpoint
+app.getRefinedRestaurants = function (){
+  $.ajax({
+        url: 'https://developers.zomato.com/api/v2.1/search',
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            'user-key': app.apiKey
+        }
+      })
+};
+
+
+
 
 app.init = function (){
 
