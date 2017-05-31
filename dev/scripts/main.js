@@ -5,6 +5,7 @@ app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
 
 app.latLong = [];
 
+app.inputOfCity = ''; 
 
 //ask user for geolocation
 app.getGeolocation = function(){
@@ -59,45 +60,59 @@ app.getGeolocation = function(){
     }  
 };
 
+//store city Input on click of find and update each city choice
+app.updateCity = function () {
+  $('#form').on('submit', function(e){
+    e.preventDefault();
+    inputOfCity = $('#cityInput').val();
+    //pass in city input to cities AJAX request
+    app.getCityByName(inputOfCity);
+  })  
+};
 
 //get restaurant ID if geolocation is NOT used
 //if geolocation is used skip this step
-app.getCityId = function (){
-  $.ajax({
+app.getCityByName = function (name){
+  //store updated city into newCity var
+  return $.ajax({
         url: 'https://developers.zomato.com/api/v2.1/cities',
         method: 'GET',
         dataType: 'json',
         headers: {
             'user-key': app.apiKey
-        }
+        }, 
+        q: name
       })
-};
+      .then(function(cityMatch){
+      console.log(cityMatch);
+    })
+  }
 
 
-//once you have City ID, call AJAX request for cuisines
-app.getRestaurantCuisine = function (){
-  $.ajax({
-        url: 'https://developers.zomato.com/api/v2.1/cuisines',
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            'user-key': app.apiKey
-        }
-      })
-};
 
-//use cuisine in search endpoint
-app.getRefinedRestaurants = function (){
-  $.ajax({
-        url: 'https://developers.zomato.com/api/v2.1/search',
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            'user-key': app.apiKey
-        }
-      })
-};
 
+// //searches for city by ID and returns radius, count and cuisines nearby
+// app.searchForCity = function (cityInformation){
+//   if (cityInformation.constructor === Array) {
+//     return $.ajax({
+//       ...
+//     })
+//   } else {
+
+//   }
+//  return $.ajax({
+//         url: 'https://developers.zomato.com/api/v2.1/search',
+//         method: 'GET',
+//         dataType: 'json',
+//         headers: {
+//             'user-key': app.apiKey
+//         },
+//         entity_type: 'city',
+//         entity_id: ,
+//         radius: 1000,
+//         count: 20,
+//       })
+// };
 
 
 
@@ -110,10 +125,9 @@ app.events = function(){
 };
 
 
-
 app.init = function (){
     app.events();
-
+    app.updateCity();
 };
 
 $(function(){
