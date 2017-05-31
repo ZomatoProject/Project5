@@ -1,13 +1,15 @@
 
 const app = {};
+app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
+app.latLong = [];
 
-const app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
+
 
 //Ajax request for location
 
 
 
-app.latLong = [];
+
 
 app.getGeolocation = function(){
     if ("geolocation" in navigator) {
@@ -29,6 +31,7 @@ app.getGeolocation = function(){
         var longitude = pos.coords.longitude;
         // Push lat and long into an array (Leaftlet map requires array)
         app.latLong = [latitude, longitude];
+        console.log(latLong);
         // Add jQuery for hiding loading icon/overlay
     
         // Pass user coordinates to Leaflet to render map
@@ -60,10 +63,19 @@ app.getGeolocation = function(){
     }
 };
 
+
+app.events = function(){
+    $(".locator").on("click", function(){
+    app.getGeolocation();
+    });
+};
+
+
 app.init = function (){
+    app.events();
 
 };
 
 $(function(){
-    app.init()
+    app.init();
 });
