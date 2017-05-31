@@ -1,4 +1,11 @@
 
+const app = {};
+
+const app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
+
+//Ajax request for location
+
+
 app.latLong = [];
 
 app.getGeolocation = function(){
@@ -21,7 +28,6 @@ app.getGeolocation = function(){
         var longitude = pos.coords.longitude;
         // Push lat and long into an array (Leaftlet map requires array)
         app.latLong = [latitude, longitude];
-        console.log(app.latLong);
         // Add jQuery for hiding loading icon/overlay
     
         // Pass user coordinates to Leaflet to render map
