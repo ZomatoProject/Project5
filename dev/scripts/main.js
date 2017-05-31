@@ -62,6 +62,10 @@ app.getGeolocation = function(){
     }
 };
 
+app.init = function (){
+
+};
+
 $(function(){
     app.init()
 });
