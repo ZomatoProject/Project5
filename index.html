@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Project Five</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+   integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+   crossorigin=""/>
   <link rel="stylesheet" href="public/styles/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -16,14 +19,27 @@
 			<button type="button" class="locator">Use your Location</button>
 			<label for="cusineInput"></label>
 			<input id="cusineInput" placeholder="Cusine">
+	<select id="cuisine"></select>
       <ul class="cityChoices"></ul>
 			<input type="submit" id="submit" value="">
 		</form>
 	</header>
-	<main class="app" id="app">
+	<main class="app">
+		<div class="wrapper">
+			<div class="restaurantContainer">
+				<!-- here we will dynamically append the 3 top restaurants -->
+			</div>
+			<div id="mapContainer">
+				
+			</div>
+		</div>
 	</main>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script src="dev/scripts/main.js"></script>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
+	   integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
+	   crossorigin=""></script>
+	<script src="public/scripts/main.js"></script>
 </body>
 </html>

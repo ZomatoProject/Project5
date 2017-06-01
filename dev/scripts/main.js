@@ -29,7 +29,13 @@ app.getGeolocation = function(){
         var longitude = Math.round(pos.coords.longitude * 100) / 100;
         // Push lat and long into an array (Leaftlet map requires array)
         app.latLong = [latitude, longitude];
+        // Pass user coordinates to leaflet to render map
+        app.myMap.panTo(app.latLong); 
+        // make a marker for user location and add to marker layer
+        app.marker = L.marker(app.latLong).addTo(app.myMap);
+        // Passing app.latLong to the searchForCity function
         searchForCity(app.latLong);
+        app.searchForCity(app.latLong);
     }
     function error(err){
         if (err.code == 0) {
@@ -51,6 +57,23 @@ app.getGeolocation = function(){
     }  
 };
 
+// create Leaflet map
+app.myMap = L.map("mapContainer", {
+  center: [43.6482035, -79.397869],
+  zoom: 13,
+  scrollWheelZoom: false
+});
+
+// add tile layers to map
+L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXN0ZWxhdGhvbXNvbiIsImEiOiJjajM0djdidnIwMGF4MzJxdTZjOW92MGozIn0.XpuJtCuIx85zUn6Eci0b0w', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+}).addTo(app.myMap);
+
+
+
+
+
 //create array to store cities returned from getCityByName AJAX request
 const possibleCities = [];
 const possibleCitiesId = [];
@@ -67,7 +90,7 @@ app.getCityByName = function (name){
         },
         data: {
           q: name,
-          count: 20,
+          count: 20
         }
       })
       .then(function(cityMatch){
@@ -75,10 +98,11 @@ app.getCityByName = function (name){
         for(var i = 0; i < cityNameArray.length; i++) {
           //push cities into array
           possibleCities.push(cityNameArray[i].name);
+          // console.log(cityNameArray);
           possibleCitiesId.push(cityNameArray[i].id);
           }
         
-        console.log(possibleCitiesId);
+        // console.log(possibleCitiesId);
           //append cities to page
         let cityOptions = '';
         for (var i = 0; i < possibleCities.length; i++){
@@ -93,11 +117,8 @@ app.getCityByName = function (name){
             } else {
                 let optionSelected = $(this).find('option:selected').val();
                 let cityIdOfSelected = $(this).find('option:selected').data('id');
-                console.log(cityIdOfSelected);
-
                 app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
             }
-         
           })
       })
 }
@@ -120,10 +141,47 @@ app.updateCity = function () {
   })  
 };
 
+
+//get all cuisine types and append to select drop down list
+const cuisineChoices = '';
+
+app.getCuisineType = function (cityId) {
+    $.ajax({
+          url: `https://developers.zomato.com/api/v2.1/cuisines`,
+          method: 'GET',
+          dataType: 'json',
+          headers: {
+              'user-key': app.apiKey
+          },
+          data: {
+            city_id: cityId
+          }
+        })
+        .then(function(cuisineTypes){
+            console.log(cuisineTypes);
+            // let cuisineTypeArray = cuisineTypes.cuisine_name;
+            // for(var i = 0; i < cuisineTypeArray.length; i++){
+
+            //     cuisineChoices += `<option value="${[i]}" data-id="${possibleCitiesId[i]}">${possibleCities[i]}</option>`;
+          })
+                // cuisineChoices.push(cuisineTypeArray[i].cuisine_name);
+             // })
+    }
+    //end of AJAX request for cuisines
+    app.getCuisineType()
+
+    // console.log(cuisineChoices);
+
+
+
+
+
 //pass city ID from above and dynamically insert it into new AJAX request
 //searches for city by ID and returns radius, count and cuisines nearby
 app.searchForCity = function (cityInformation){
+  //.constructor is checking for the type of data of cityInformation (whether it's an array or an integer)
   if (cityInformation.constructor === Array) {
+    // console.log(cityInformation);
     return $.ajax({
         url: 'https://developers.zomato.com/api/v2.1/search',
         method: 'GET',
@@ -131,6 +189,7 @@ app.searchForCity = function (cityInformation){
         headers: {
             'user-key': app.apiKey
         },
+
         data: {
           entity_type: 'city',
           lat: `${cityInformation[0]}`,//lat depending on which order it's in array
@@ -140,8 +199,11 @@ app.searchForCity = function (cityInformation){
           sort: 'rating',
           order: 'desc'
           }
+        }).then(function(res){
+            // console.log(res);
         })
   } else {
+console.log(cityInformation);
 //if cityInformation is NOT an array (not lon/lat), insert the city ID 
  return $.ajax({
         url: 'https://developers.zomato.com/api/v2.1/search',
@@ -158,6 +220,8 @@ app.searchForCity = function (cityInformation){
           sort: 'rating',
           order: 'desc'
           }
+      }).then(function(res){
+        console.log(res);
       })
   }
 };
@@ -174,6 +238,7 @@ app.events = function(){
 app.init = function (){
     app.events();
     app.updateCity();
+
 };
 
 $(function(){
