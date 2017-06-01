@@ -5,6 +5,7 @@ app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
 
 app.latLong = [];
 
+//inputOfCity stores the value of the typed city in the form
 app.inputOfCity = ''; 
 
 //ask user for geolocation
@@ -60,17 +61,8 @@ app.getGeolocation = function(){
     }  
 };
 
-//store city Input on click of find and update each city choice
-app.updateCity = function () {
-  $('#form').on('submit', function(e){
-    e.preventDefault();
-    inputOfCity = $('#cityInput').val();
-    console.log(inputOfCity);
-    //pass in city input to cities AJAX request
-    app.getCityByName(inputOfCity);
-  })  
-};
-
+//create array to store cities returned from getCityByName AJAX request
+const possibleCities = [];
 //get restaurant ID if geolocation is NOT used
 //if geolocation is used skip this step
 app.getCityByName = function (name){
@@ -88,24 +80,66 @@ app.getCityByName = function (name){
         }
       })
       .then(function(cityMatch){
-      console.log(cityMatch);
-    })
-  }
+        let cityNameArray = cityMatch.location_suggestions;
+        for(var i = 0; i < cityNameArray.length; i++) {
+          //push cities into array
+          possibleCities.push(cityNameArray[i].name);
+          }
+          //append cities to page
+        let cityOptions = '';
+        for (var i = 0; i < possibleCities.length; i++){
+          cityOptions += '<option value="'+ possibleCities[i] + '">' + possibleCities[i] + '</option>';
+          }
+          $('#items').append(cityOptions);
+          //on click of selected city option from dropdown, get selected city id
+          //store selected ID into variable and pass it as argument into next function
+          $('option').on('click', function(){
+            let optionSelected = $(this).find('option:selected').val();
+          })
+      // app.searchForCity();//insert city ID variable in search for city
+      })
+}
+//end of getCityByName AJAX request//
 
-  app.getCityByName();
 
 
 
+//store city Input on click of find and update each city choice
+app.updateCity = function () {
+  $('#form').on('submit', function(e){
+    e.preventDefault();
+    inputOfCity = $('#cityInput').val();
+    //pass in city input to cities AJAX request
+    app.getCityByName(inputOfCity);
+    $('#items').find('option').remove();
+    //resets array of possibleCities to zero
+    possibleCities.length = 0;
+  })  
+};
 
-// //searches for city by ID and returns radius, count and cuisines nearby
+//pass city ID from above and dynamically insert it into new AJAX request
+//searches for city by ID and returns radius, count and cuisines nearby
 // app.searchForCity = function (cityInformation){
 //   if (cityInformation.constructor === Array) {
 //     return $.ajax({
-//       ...
-//     })
+//         url: 'https://developers.zomato.com/api/v2.1/search',
+//         method: 'GET',
+//         dataType: 'json',
+//         headers: {
+//             'user-key': app.apiKey
+//         },
+//         data: {
+//           entity_type: 'city',
+//           lat: `${cityInformation[0]}`,//lat depending on which order it's in array
+//           lon: `${cityInformation[1]}`,//lon depending on which order it's in array
+//           radius: 1000,
+//           count: 20,
+//           sort: 'rating',
+//           order: 'desc'
+//           }
+//         })
 //   } else {
-
-//   }
+// //if cityInformation is NOT an array (not lon/lat), insert the city ID 
 //  return $.ajax({
 //         url: 'https://developers.zomato.com/api/v2.1/search',
 //         method: 'GET',
@@ -113,17 +147,19 @@ app.getCityByName = function (name){
 //         headers: {
 //             'user-key': app.apiKey
 //         },
-//         entity_type: 'city',
-//         entity_id: ,
-//         radius: 1000,
-//         count: 20,
+//         data: {
+//           entity_type: 'city',
+//           entity_id: `${cityInformation}`,
+//           radius: 1000,
+//           count: 20,
+//           sort: 'rating',
+//           order: 'desc'
+//           }
 //       })
+//   }
 // };
 
-
-
-
-
+//geolocation event handler
 app.events = function(){
     $(".locator").on("click", function(){
     app.getGeolocation();
