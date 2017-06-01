@@ -5,6 +5,8 @@ app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
 
 app.latLong = [];
 
+app.cuisineArray = [];
+
 //inputOfCity stores the value of the typed city in the form
 app.inputOfCity = ''; 
 
@@ -34,8 +36,7 @@ app.getGeolocation = function(){
         // make a marker for user location and add to marker layer
         app.marker = L.marker(app.latLong).addTo(app.myMap);
         // Passing app.latLong to the searchForCity function
-        searchForCity(app.latLong);
-        app.searchForCity(app.latLong);
+        // app.searchForCity(app.latLong);
     }
     function error(err){
         if (err.code == 0) {
@@ -157,7 +158,7 @@ app.searchForCity = function (cityInformation){
           lat: `${cityInformation[0]}`,//lat depending on which order it's in array
           lon: `${cityInformation[1]}`,//lon depending on which order it's in array
           radius: 1000,
-          count: 20,
+          count: 100,
           sort: 'rating',
           order: 'desc'
           }
@@ -179,15 +180,22 @@ console.log(cityInformation);
           entity_type: 'city',
           entity_id: `${cityInformation}`,
           radius: 1000,
-          count: 20,
+          count: 100,
           sort: 'rating',
           order: 'desc'
           }
       }).then(function(res){
         app.restaurants = res.restaurants;
-        app.getCuisineType(res.restaurants)
+        app.getCuisineType(res.restaurants);
       })
   }
+};
+
+// get cuisine type from top restaurant list and push into array
+app.getCuisineType = function(restaurant){
+  app.restaurants.forEach(function(restaurantItem){
+    console.log(restaurant);
+  });
 };
 
 
