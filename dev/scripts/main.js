@@ -30,6 +30,8 @@ app.getGeolocation = function(){
         // Push lat and long into an array (Leaftlet map requires array)
         app.latLong = [latitude, longitude];
         app.searchForCity(app.latLong);
+        app.getCuisineByCity(app.latLong);
+        
     }
     function error(err){
         if (err.code == 0) {
@@ -98,8 +100,9 @@ app.getCityByName = function (name){
                 let optionSelected = $(this).find('option:selected').val();
                 let cityIdOfSelected = $(this).find('option:selected').data('id');
                 // console.log(cityIdOfSelected);
-                app.getCuisineType(cityIdOfSelected);
+                app.getCuisineByCity(cityIdOfSelected);
                 app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
+
             }
          
           })
@@ -128,7 +131,21 @@ app.updateCity = function () {
 //get all cuisine types and append to select drop down list
 const cuisineChoices = '';
 
-app.getCuisineType = function (cityId) {
+app.getCuisineByCity = function (city) {
+    if (city.constructor === Array) {
+        $.ajax({
+          url: `https://developers.zomato.com/api/v2.1/cuisines`,
+          method: 'GET',
+          dataType: 'json',
+          headers: {
+              'user-key': app.apiKey
+          },
+          data: {
+            lat: `${city[0]}`,
+            lon: `${city[1]}` 
+          }
+        })
+    }
     $.ajax({
           url: `https://developers.zomato.com/api/v2.1/cuisines`,
           method: 'GET',
@@ -137,7 +154,7 @@ app.getCuisineType = function (cityId) {
               'user-key': app.apiKey
           },
           data: {
-            city_id: cityId
+            city_id: city
           }
         })
         .then(function(cuisineTypes){
@@ -151,11 +168,9 @@ app.getCuisineType = function (cityId) {
              // })
     }
     //end of AJAX request for cuisines
-    app.getCuisineType()
+    // app.getCuisineType()
 
     // console.log(cuisineChoices);
-
-
 
 
 
