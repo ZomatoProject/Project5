@@ -85,14 +85,19 @@ app.getCityByName = function (name){
         for (var i = 0; i < possibleCities.length; i++){
           cityOptions += `<option value="${possibleCities[i]}" data-id="${possibleCitiesId[i]}">${possibleCities[i]}</option>`;
           }
-          $('#items').append(cityOptions);
+          $('#items').append('<option value="choice">Choose city</option>' + cityOptions);
           //on click of selected city option from dropdown, get selected city id
           //store selected ID into variable and pass it as argument into next function
           $('select').on('change', function(){
-            let optionSelected = $(this).find('option:selected').val();
-            let cityIdOfSelected = $(this).find('option:selected').data('id');
-            console.log(optionSelected, cityIdOfSelected);
-            app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
+            if ($(this).find('option:selected').val() === "choice"){
+              console.log("Choose a city!");
+            } else {
+                let optionSelected = $(this).find('option:selected').val();
+                let cityIdOfSelected = $(this).find('option:selected').data('id');
+                console.log(cityIdOfSelected);
+                app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
+            }
+         
           })
       })
 }
