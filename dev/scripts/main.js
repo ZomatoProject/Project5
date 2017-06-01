@@ -30,16 +30,7 @@ app.getGeolocation = function(){
         // Push lat and long into an array (Leaftlet map requires array)
         app.latLong = [latitude, longitude];
         console.log(app.latLong);
-        // Add jQuery for hiding loading icon/overlay
-    
-        // Pass user coordinates to Leaflet to render map
-
-        // Make a marker for user location and add to marker layer
-        
-        // Bring in Zomato results for top 3 restos
-
-        // Add top three restos to DOM
-
+        searchForCity(app.latLong);
     }
     function error(err){
         if (err.code == 0) {
@@ -63,6 +54,7 @@ app.getGeolocation = function(){
 
 //create array to store cities returned from getCityByName AJAX request
 const possibleCities = [];
+const possibleCitiesId = [];
 //get restaurant ID if geolocation is NOT used
 //if geolocation is used skip this step
 app.getCityByName = function (name){
@@ -84,20 +76,33 @@ app.getCityByName = function (name){
         for(var i = 0; i < cityNameArray.length; i++) {
           //push cities into array
           possibleCities.push(cityNameArray[i].name);
+<<<<<<< HEAD
           console.log(cityNameArray);
+=======
+          possibleCitiesId.push(cityNameArray[i].id);
+>>>>>>> 95bde978b03b691d02b06fe2cb2e7d4cbd2a5abd
           }
+        
+        console.log(possibleCitiesId);
           //append cities to page
         let cityOptions = '';
         for (var i = 0; i < possibleCities.length; i++){
-          cityOptions += '<option value="'+ possibleCities[i] + '">' + possibleCities[i] + '</option>';
+          cityOptions += `<option value="${possibleCities[i]}" data-id="${possibleCitiesId[i]}">${possibleCities[i]}</option>`;
           }
-          $('#items').append(cityOptions);
+          $('#items').append('<option value="choice">Choose city</option>' + cityOptions);
           //on click of selected city option from dropdown, get selected city id
           //store selected ID into variable and pass it as argument into next function
-          $('option').on('click', function(){
-            let optionSelected = $(this).find('option:selected').val();
+          $('select').on('change', function(){
+            if ($(this).find('option:selected').val() === "choice"){
+              console.log("Choose a city!");
+            } else {
+                let optionSelected = $(this).find('option:selected').val();
+                let cityIdOfSelected = $(this).find('option:selected').data('id');
+                console.log(cityIdOfSelected);
+                app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
+            }
+         
           })
-      // app.searchForCity();//insert city ID variable in search for city
       })
 }
 //end of getCityByName AJAX request//
@@ -115,50 +120,51 @@ app.updateCity = function () {
     $('#items').find('option').remove();
     //resets array of possibleCities to zero
     possibleCities.length = 0;
+    possibleCitiesId.length = 0;
   })  
 };
 
 //pass city ID from above and dynamically insert it into new AJAX request
 //searches for city by ID and returns radius, count and cuisines nearby
-// app.searchForCity = function (cityInformation){
-//   if (cityInformation.constructor === Array) {
-//     return $.ajax({
-//         url: 'https://developers.zomato.com/api/v2.1/search',
-//         method: 'GET',
-//         dataType: 'json',
-//         headers: {
-//             'user-key': app.apiKey
-//         },
-//         data: {
-//           entity_type: 'city',
-//           lat: `${cityInformation[0]}`,//lat depending on which order it's in array
-//           lon: `${cityInformation[1]}`,//lon depending on which order it's in array
-//           radius: 1000,
-//           count: 20,
-//           sort: 'rating',
-//           order: 'desc'
-//           }
-//         })
-//   } else {
-// //if cityInformation is NOT an array (not lon/lat), insert the city ID 
-//  return $.ajax({
-//         url: 'https://developers.zomato.com/api/v2.1/search',
-//         method: 'GET',
-//         dataType: 'json',
-//         headers: {
-//             'user-key': app.apiKey
-//         },
-//         data: {
-//           entity_type: 'city',
-//           entity_id: `${cityInformation}`,
-//           radius: 1000,
-//           count: 20,
-//           sort: 'rating',
-//           order: 'desc'
-//           }
-//       })
-//   }
-// };
+app.searchForCity = function (cityInformation){
+  if (cityInformation.constructor === Array) {
+    return $.ajax({
+        url: 'https://developers.zomato.com/api/v2.1/search',
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            'user-key': app.apiKey
+        },
+        data: {
+          entity_type: 'city',
+          lat: `${cityInformation[0]}`,//lat depending on which order it's in array
+          lon: `${cityInformation[1]}`,//lon depending on which order it's in array
+          radius: 1000,
+          count: 20,
+          sort: 'rating',
+          order: 'desc'
+          }
+        })
+  } else {
+//if cityInformation is NOT an array (not lon/lat), insert the city ID 
+ return $.ajax({
+        url: 'https://developers.zomato.com/api/v2.1/search',
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            'user-key': app.apiKey
+        },
+        data: {
+          entity_type: 'city',
+          entity_id: `${cityInformation}`,
+          radius: 1000,
+          count: 20,
+          sort: 'rating',
+          order: 'desc'
+          }
+      })
+  }
+};
 
 //geolocation event handler
 app.events = function(){
