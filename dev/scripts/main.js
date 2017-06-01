@@ -29,7 +29,6 @@ app.getGeolocation = function(){
         var longitude = Math.round(pos.coords.longitude * 100) / 100;
         // Push lat and long into an array (Leaftlet map requires array)
         app.latLong = [latitude, longitude];
-        console.log(app.latLong);
         searchForCity(app.latLong);
     }
     function error(err){
@@ -95,6 +94,7 @@ app.getCityByName = function (name){
                 let optionSelected = $(this).find('option:selected').val();
                 let cityIdOfSelected = $(this).find('option:selected').data('id');
                 console.log(cityIdOfSelected);
+
                 app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
             }
          
@@ -161,6 +161,7 @@ app.searchForCity = function (cityInformation){
       })
   }
 };
+
 
 //geolocation event handler
 app.events = function(){
