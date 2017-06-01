@@ -29,7 +29,11 @@ app.getGeolocation = function(){
         var longitude = Math.round(pos.coords.longitude * 100) / 100;
         // Push lat and long into an array (Leaftlet map requires array)
         app.latLong = [latitude, longitude];
-        console.log(app.latLong);
+        // Pass user coordinates to leaflet to render map
+        app.myMap.panTo(app.latLong); 
+        // make a marker for user location and add to marker layer
+        app.marker = L.marker(app.latLong).addTo(app.myMap);
+        // Passing app.latLong to the searchForCity function
         searchForCity(app.latLong);
     }
     function error(err){
@@ -51,6 +55,23 @@ app.getGeolocation = function(){
         }
     }  
 };
+
+// create Leaflet map
+app.myMap = L.map("mapContainer", {
+  center: [43.6482035, -79.397869],
+  zoom: 13,
+  scrollWheelZoom: false
+});
+
+// add tile layers to map
+L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXN0ZWxhdGhvbXNvbiIsImEiOiJjajM0djdidnIwMGF4MzJxdTZjOW92MGozIn0.XpuJtCuIx85zUn6Eci0b0w', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+}).addTo(app.myMap);
+
+
+
+
 
 //create array to store cities returned from getCityByName AJAX request
 const possibleCities = [];
@@ -123,6 +144,7 @@ app.updateCity = function () {
 //pass city ID from above and dynamically insert it into new AJAX request
 //searches for city by ID and returns radius, count and cuisines nearby
 app.searchForCity = function (cityInformation){
+  //.constructor is checking for the type of data of cityInformation (whether it's an array or an integer)
   if (cityInformation.constructor === Array) {
     return $.ajax({
         url: 'https://developers.zomato.com/api/v2.1/search',
