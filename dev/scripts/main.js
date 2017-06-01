@@ -84,6 +84,7 @@ app.getCityByName = function (name){
         for(var i = 0; i < cityNameArray.length; i++) {
           //push cities into array
           possibleCities.push(cityNameArray[i].name);
+          console.log(cityNameArray);
           }
           //append cities to page
         let cityOptions = '';
