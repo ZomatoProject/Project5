@@ -98,6 +98,7 @@ app.getCityByName = function (name){
                 let optionSelected = $(this).find('option:selected').val();
                 let cityIdOfSelected = $(this).find('option:selected').data('id');
                 // console.log(cityIdOfSelected);
+                app.getCuisineType(cityIdOfSelected);
                 app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
             }
          
@@ -122,6 +123,41 @@ app.updateCity = function () {
     possibleCitiesId.length = 0;
   })  
 };
+
+
+//get all cuisine types and append to select drop down list
+const cuisineChoices = '';
+
+app.getCuisineType = function (cityId) {
+    $.ajax({
+          url: `https://developers.zomato.com/api/v2.1/cuisines`,
+          method: 'GET',
+          dataType: 'json',
+          headers: {
+              'user-key': app.apiKey
+          },
+          data: {
+            city_id: cityId
+          }
+        })
+        .then(function(cuisineTypes){
+            console.log(cuisineTypes);
+            // let cuisineTypeArray = cuisineTypes.cuisine_name;
+            // for(var i = 0; i < cuisineTypeArray.length; i++){
+
+            //     cuisineChoices += `<option value="${[i]}" data-id="${possibleCitiesId[i]}">${possibleCities[i]}</option>`;
+          })
+                // cuisineChoices.push(cuisineTypeArray[i].cuisine_name);
+             // })
+    }
+    //end of AJAX request for cuisines
+    app.getCuisineType()
+
+    // console.log(cuisineChoices);
+
+
+
+
 
 //pass city ID from above and dynamically insert it into new AJAX request
 //searches for city by ID and returns radius, count and cuisines nearby
@@ -172,6 +208,9 @@ console.log(cityInformation);
   }
 };
 
+// AJAX REQUEST FOR ALL CUISINE TYPES
+
+
 //geolocation event handler
 app.events = function(){
     $(".locator").on("click", function(){
@@ -183,6 +222,7 @@ app.events = function(){
 app.init = function (){
     app.events();
     app.updateCity();
+
 };
 
 $(function(){
