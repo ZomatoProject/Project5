@@ -30,16 +30,7 @@ app.getGeolocation = function(){
         // Push lat and long into an array (Leaftlet map requires array)
         app.latLong = [latitude, longitude];
         console.log(app.latLong);
-        // Add jQuery for hiding loading icon/overlay
-    
-        // Pass user coordinates to Leaflet to render map
-
-        // Make a marker for user location and add to marker layer
-        
-        // Bring in Zomato results for top 3 restos
-
-        // Add top three restos to DOM
-
+        searchForCity(app.latLong);
     }
     function error(err){
         if (err.code == 0) {
@@ -100,8 +91,9 @@ app.getCityByName = function (name){
           $('select').on('change', function(){
             let optionSelected = $(this).find('option:selected').val();
             let cityIdOfSelected = $(this).find('option:selected').data('id');
+            console.log(optionSelected, cityIdOfSelected);
+            app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
           })
-      // app.searchForCity();//insert city ID variable in search for city
       })
 }
 //end of getCityByName AJAX request//
@@ -119,6 +111,7 @@ app.updateCity = function () {
     $('#items').find('option').remove();
     //resets array of possibleCities to zero
     possibleCities.length = 0;
+    possibleCitiesId.length = 0;
   })  
 };
 
