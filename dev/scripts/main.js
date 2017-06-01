@@ -77,6 +77,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/
 //create array to store cities returned from getCityByName AJAX request
 const possibleCities = [];
 const possibleCitiesId = [];
+
 //get restaurant ID if geolocation is NOT used
 //if geolocation is used skip this step
 app.getCityByName = function (name){
@@ -98,13 +99,9 @@ app.getCityByName = function (name){
         for(var i = 0; i < cityNameArray.length; i++) {
           //push cities into array
           possibleCities.push(cityNameArray[i].name);
-
           // console.log(cityNameArray);
-
           possibleCitiesId.push(cityNameArray[i].id);
-
           }
-        
         // console.log(possibleCitiesId);
           //append cities to page
         let cityOptions = '';
@@ -120,67 +117,26 @@ app.getCityByName = function (name){
             } else {
                 let optionSelected = $(this).find('option:selected').val();
                 let cityIdOfSelected = $(this).find('option:selected').data('id');
-                // console.log(cityIdOfSelected);
-                app.getCuisineType(cityIdOfSelected);
                 app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
             }
-         
           })
       })
 }
 //end of getCityByName AJAX request//
 
-
-
-
 //store city Input on click of find and update each city choice
 app.updateCity = function () {
   $('#form').on('submit', function(e){
     e.preventDefault();
-    inputOfCity = $('#cityInput').val();
+    app.inputOfCity = $('#cityInput').val();
     //pass in city input to cities AJAX request
-    app.getCityByName(inputOfCity);
+    app.getCityByName(app.inputOfCity);
     $('#items').find('option').remove();
     //resets array of possibleCities to zero
     possibleCities.length = 0;
     possibleCitiesId.length = 0;
   })  
 };
-
-
-//get all cuisine types and append to select drop down list
-const cuisineChoices = '';
-
-app.getCuisineType = function (cityId) {
-    $.ajax({
-          url: `https://developers.zomato.com/api/v2.1/cuisines`,
-          method: 'GET',
-          dataType: 'json',
-          headers: {
-              'user-key': app.apiKey
-          },
-          data: {
-            city_id: cityId
-          }
-        })
-        .then(function(cuisineTypes){
-            console.log(cuisineTypes);
-            // let cuisineTypeArray = cuisineTypes.cuisine_name;
-            // for(var i = 0; i < cuisineTypeArray.length; i++){
-
-            //     cuisineChoices += `<option value="${[i]}" data-id="${possibleCitiesId[i]}">${possibleCities[i]}</option>`;
-          })
-                // cuisineChoices.push(cuisineTypeArray[i].cuisine_name);
-             // })
-    }
-    //end of AJAX request for cuisines
-    app.getCuisineType()
-
-    // console.log(cuisineChoices);
-
-
-
-
 
 //pass city ID from above and dynamically insert it into new AJAX request
 //searches for city by ID and returns radius, count and cuisines nearby
@@ -206,7 +162,8 @@ app.searchForCity = function (cityInformation){
           order: 'desc'
           }
         }).then(function(res){
-            // console.log(res);
+          app.restaurants = res.restaurants;
+          app.getCuisineType(cityInformation, res.restaurants);
         })
   } else {
 console.log(cityInformation);
@@ -227,12 +184,11 @@ console.log(cityInformation);
           order: 'desc'
           }
       }).then(function(res){
-        console.log(res);
+        app.restaurants = res.restaurants;
+        app.getCuisineType(res.restaurants)
       })
   }
 };
-
-// AJAX REQUEST FOR ALL CUISINE TYPES
 
 
 //geolocation event handler
