@@ -84,7 +84,7 @@ app.getCityByName = function (name){
         },
         data: {
           q: name,
-          count: 20,
+          count: 20
         }
       })
       .then(function(cityMatch){
