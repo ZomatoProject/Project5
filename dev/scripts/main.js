@@ -29,8 +29,7 @@ app.getGeolocation = function(){
         var longitude = Math.round(pos.coords.longitude * 100) / 100;
         // Push lat and long into an array (Leaftlet map requires array)
         app.latLong = [latitude, longitude];
-        console.log(app.latLong);
-        searchForCity(app.latLong);
+        app.searchForCity(app.latLong);
     }
     function error(err){
         if (err.code == 0) {
@@ -76,14 +75,14 @@ app.getCityByName = function (name){
         for(var i = 0; i < cityNameArray.length; i++) {
           //push cities into array
           possibleCities.push(cityNameArray[i].name);
-<<<<<<< HEAD
-          console.log(cityNameArray);
-=======
+
+          // console.log(cityNameArray);
+
           possibleCitiesId.push(cityNameArray[i].id);
->>>>>>> 95bde978b03b691d02b06fe2cb2e7d4cbd2a5abd
+
           }
         
-        console.log(possibleCitiesId);
+        // console.log(possibleCitiesId);
           //append cities to page
         let cityOptions = '';
         for (var i = 0; i < possibleCities.length; i++){
@@ -98,7 +97,7 @@ app.getCityByName = function (name){
             } else {
                 let optionSelected = $(this).find('option:selected').val();
                 let cityIdOfSelected = $(this).find('option:selected').data('id');
-                console.log(cityIdOfSelected);
+                // console.log(cityIdOfSelected);
                 app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
             }
          
@@ -128,6 +127,7 @@ app.updateCity = function () {
 //searches for city by ID and returns radius, count and cuisines nearby
 app.searchForCity = function (cityInformation){
   if (cityInformation.constructor === Array) {
+    // console.log(cityInformation);
     return $.ajax({
         url: 'https://developers.zomato.com/api/v2.1/search',
         method: 'GET',
@@ -135,6 +135,7 @@ app.searchForCity = function (cityInformation){
         headers: {
             'user-key': app.apiKey
         },
+
         data: {
           entity_type: 'city',
           lat: `${cityInformation[0]}`,//lat depending on which order it's in array
@@ -144,8 +145,11 @@ app.searchForCity = function (cityInformation){
           sort: 'rating',
           order: 'desc'
           }
+        }).then(function(res){
+            // console.log(res);
         })
   } else {
+console.log(cityInformation);
 //if cityInformation is NOT an array (not lon/lat), insert the city ID 
  return $.ajax({
         url: 'https://developers.zomato.com/api/v2.1/search',
@@ -162,6 +166,8 @@ app.searchForCity = function (cityInformation){
           sort: 'rating',
           order: 'desc'
           }
+      }).then(function(res){
+        console.log(res);
       })
   }
 };
