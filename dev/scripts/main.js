@@ -34,7 +34,6 @@ app.getGeolocation = function(){
         // make a marker for user location and add to marker layer
         app.marker = L.marker(app.latLong).addTo(app.myMap);
         // Passing app.latLong to the searchForCity function
-        searchForCity(app.latLong);
         app.searchForCity(app.latLong);
     }
     function error(err){
@@ -166,7 +165,6 @@ app.searchForCity = function (cityInformation){
           app.getCuisineType(cityInformation, res.restaurants);
         })
   } else {
-console.log(cityInformation);
 //if cityInformation is NOT an array (not lon/lat), insert the city ID 
  return $.ajax({
         url: 'https://developers.zomato.com/api/v2.1/search',
