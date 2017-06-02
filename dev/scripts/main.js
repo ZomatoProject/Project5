@@ -200,7 +200,7 @@ app.getCuisineType = function(restaurant){
   });
 };
 
-let cuisinesList = [];
+app.cuisinesList = [];
 
 //loop over the Object containing arrays of each restaurant and extract the cuisines into an empty array
 $.when(app.searchForCity)
@@ -213,7 +213,7 @@ $.when(app.searchForCity)
         cuisinesList.push(eachCuisineType);
         }
         //delete duplicates in array using onlyUnique function below
-        app.uniqueCuisineList = cuisinesList.filter( app.onlyUnique );
+        app.uniqueCuisineList = app.cuisinesList.filter( app.onlyUnique );
       } 
       //then return the cuisine type selected.val() into the search AJAX request
       // let CuisineDropdown = '';
@@ -236,6 +236,10 @@ app.onlyUnique = function (value, index, self) {
 app.events = function(){
     $(".locator").on("click", function(){
     app.getGeolocation();
+    });
+    $("#formSubmit").on("click", function(){
+      //initiate smooth scroll 
+      // 
     });
 };
 
