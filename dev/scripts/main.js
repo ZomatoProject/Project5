@@ -145,10 +145,14 @@ app.updateCity = function () {
 
 
 
+// looping through the restaurant list array (based on user location) to get the cuisine types found in the restaurant objects
 
 app.getCuisineType = function(restaurantsObject) {
   for (var index in restaurantsObject) {
     let eachRestaurant = restaurantsObject[index].restaurant;
+    // "split" makes the cuisine value an array and splits it, removing anything after the comma
+    eachRestaurant.cuisines = eachRestaurant.cuisines.split(",")[0];
+    console.log(eachRestaurant);
     let eachCuisineType = eachRestaurant.cuisines;
     app.unfilteredCuisinesList.push(eachCuisineType);
   }
@@ -166,13 +170,13 @@ app.getCuisineType = function(restaurantsObject) {
   // display cuisineOptions and default choose option in the drop down
   $('#cuisine').append('<option value="choice">Choose Cuisine</option>' + cuisineOptions);
 
-  $('.food').on('change', function(){
-    if ($(this).find('option:selected').val() === "choice"){
-      console.log("Choose a Cuisine!");
-    } 
-      app.cuisineSelected = $(this).find('option:selected').val();
-      }
-  })
+  // $('.food').on('change', function(){
+  //   if ($(this).find('option:selected').val() === "choice"){
+  //     console.log("Choose a Cuisine!");
+  //   } 
+  //     app.cuisineSelected = $(this).find('option:selected').val();
+  //     }
+  // })
 } 
 
 
