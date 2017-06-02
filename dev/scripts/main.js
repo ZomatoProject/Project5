@@ -171,9 +171,9 @@ app.searchForCity = function (cityInformation){
           order: 'desc'
           }
         }).then(function(res){
-          // app.restaurants = res.restaurants;
+          app.restaurants = res.restaurants;
           app.getCuisineType(res.restaurants);
-          // console.log(app.restaurants);
+          console.log(app.restaurants);
         })
   } else {
 //if cityInformation is NOT an array (not lon/lat), insert the city ID 
