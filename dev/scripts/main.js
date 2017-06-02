@@ -168,6 +168,7 @@ app.searchForCity = function (cityInformation){
           // app.restaurants = res.restaurants;
           let rest = res.restaurants;
           app.getCuisineType(rest);
+          app.CuisineMatch(res);
           // console.log(app.restaurants);
         })
   } else {
@@ -198,6 +199,23 @@ app.searchForCity = function (cityInformation){
       })
   }
 };
+
+let restaurantsByCuisine = [];
+
+app.cuisineMatch = function (restaurantRes){
+  console.log(restaurantRes);
+  // if (restaurantRes.cuisine === selectedCuisine) {
+  //   let cuisineMatch = restaurantRes;
+  //   restaurantsByCuisine.push(cuisineMatch)
+  }
+}
+
+// cityResults will come from calling app.cuisineMatch inside app.restaurants function
+
+// selectedCuisine will come from user selection of particular Cuisine
+
+finalResults = [restaurantsByCuisine[0], restaurantsByCuisine[1], restaurantsByCuisine[2]];
+
 // let cuisinesList = [];
 //loop over the Object containing arrays of each restaurant and extract the cuisines into an empty array
 // $.when(app.searchForCity)
