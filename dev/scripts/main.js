@@ -1,11 +1,17 @@
+
 const app = {};
+
 app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
+
 app.latLong = [];
+
 //inputOfCity stores the value of the typed city in the form
 app.inputOfCity = ''; 
 app.possibleCities = [];
 app.possibleCitiesId = [];
 app.unfilteredCuisinesList = [];
+app.cuisinesList = [];
+
 
 //ask user for geolocation
 app.getGeolocation = function(){
@@ -54,19 +60,23 @@ app.getGeolocation = function(){
         }
     }  
 };
+
 // create Leaflet map
 app.myMap = L.map("mapContainer", {
   center: [43.6482035, -79.397869],
   zoom: 13,
   scrollWheelZoom: false
 });
+
 // add tile layers to map
 L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXN0ZWxhdGhvbXNvbiIsImEiOiJjajM0djdidnIwMGF4MzJxdTZjOW92MGozIn0.XpuJtCuIx85zUn6Eci0b0w', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
 }).addTo(app.myMap);
 
+
 //create array to store cities returned from getCityByName AJAX request
+
 //get restaurant ID if geolocation is NOT used
 //if geolocation is used skip this step
 app.getCityByName = function (name){
@@ -112,6 +122,7 @@ app.getCityByName = function (name){
       })
 }
 //end of getCityByName AJAX request//
+
 //store city Input on click of find and update each city choice
 app.updateCity = function () {
   $('#form').on('submit', function(e){
@@ -133,7 +144,6 @@ app.updateCity = function () {
 
 
 
-
 // looping through the restaurant list array (based on user location) to get the cuisine types found in the restaurant objects
 
 
@@ -147,6 +157,7 @@ app.getCuisineType = function(restaurantsObject) {
     app.unfilteredCuisinesList.push(eachCuisineType);
   }
   //delete duplicates in array using onlyUnique function below
+
   app.uniqueCuisineList = app.unfilteredCuisinesList.filter(function (value, index, self) { 
     return self.indexOf(value) === index;
   })
@@ -161,6 +172,15 @@ app.getCuisineType = function(restaurantsObject) {
   $('#cuisine').append('<option value="choice">Choose Cuisine</option>' + cuisineOptions);
 
 
+  $('.food').on('change', function(){
+    if ($(this).find('option:selected').val() === "choice"){
+      alert("Choose a Cuisine!");
+    } else {
+    app.cuisineSelected = $(this).val(); 
+    console.log(app.cuisineSelected);
+    }
+  }
+)}; 
 
 //pass city ID from above and dynamically insert it into new AJAX request
 //searches for city by ID and returns radius, count and cuisines nearby
@@ -176,6 +196,7 @@ app.searchForCity = function (cityInformation){
         headers: {
             'user-key': app.apiKey
         },
+
         data: {
           entity_type: 'city',
           lat: `${cityInformation[0]}`,//lat depending on which order it's in array
@@ -189,7 +210,6 @@ app.searchForCity = function (cityInformation){
           // app.restaurants = res.restaurants;
           let rest = res.restaurants;
           app.getCuisineType(rest);
-          app.cuisineMatch(rest);
           // console.log(app.restaurants);
         })
   } else {
@@ -221,45 +241,6 @@ app.searchForCity = function (cityInformation){
   }
 };
 
-const restaurantsByCuisine = [];
-
-
-app.cuisineMatch = function (restaurantRes){
-  restaurantRes.forEach(function(res){
-    if (res.restaurant.cuisines === selectedCuisine) {
-      restaurantsByCuisine.push(res.restaurant)
-    }
-
-
-    const restaurantCuisine = res.restaurant.cuisines;
-
-  })
-};
-
-highestRated = restaurantsByCuisine.sort(function(a, b){
-  return a.res.restaurant - b.res.restaurant;
-})
-
-
-// }
-
-// cityResults will come from calling app.cuisineMatch inside app.restaurants function
-
-// selectedCuisine will come from user selection of particular Cuisine
-
-// finalResults = [restaurantsByCuisine[0], restaurantsByCuisine[1], restaurantsByCuisine[2]];
-
-// let cuisinesList = [];
-//loop over the Object containing arrays of each restaurant and extract the cuisines into an empty array
-// $.when(app.searchForCity)
-//when the searchForCity AJAX request returns a restaurants Object
-  // .then(function(restaurantsObject){
-  //   app.getCuisineType(restaurantsObject);
-  // }
-//function that will remove duplicate values in an array
-// app.onlyUnique = function (value, index, self) { 
-//     return self.indexOf(value) === index;
-// }
 
 //geolocation event handler
 app.events = function(){
@@ -267,14 +248,15 @@ app.events = function(){
     app.getGeolocation();
     });
 };
+
+
 app.init = function (){
     app.events();
     app.updateCity();
+
 };
+
 $(function(){
     app.init();
-
 });
-
-};
 
