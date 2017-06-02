@@ -204,18 +204,19 @@ const restaurantsByCuisine = [];
 
 app.cuisineMatch = function (restaurantRes){
   restaurantRes.forEach(function(res){
+    if (res.restaurant.cuisines === selectedCuisine) {
+      restaurantsByCuisine.push(res.restaurant)
+    }
+
+
     const restaurantCuisine = res.restaurant.cuisines;
 
-    console.log(restaurantCuisine);
   })
-  // console.log(restaurantRes[i].restaurant);
-    // console.log(restaurantRes.cuisine);
-  if (restaurantRes.cuisine === selectedCuisine) {
-    let cuisineMatch = restaurantRes;
-    restaurantsByCuisine.push(cuisineMatch)
-
-  }
 };
+
+highestRated = restaurantsByCuisine.sort(function(a, b){
+  return a.res.restaurant - b.res.restaurant;
+})
 
 
 // }
