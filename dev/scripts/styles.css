@@ -1,0 +1,14 @@
+
+@font-face {
+  font-family: 'enyo-slab';
+  	src: url(enyo-slab.//); format:('ttf');
+        /* // url(..//images/fonts/press_style/PressStyle.woff); format('woff');*/
+}
+
+h1{
+	font-family: 'enyo-slab';
+    font-size: 98px;
+    font-weight: 400;
+    margin: 0;
+    color: blue;
+}
