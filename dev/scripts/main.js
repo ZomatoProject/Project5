@@ -141,11 +141,6 @@ app.updateCity = function () {
 };
 
 
-
-
-
-
-
 app.getCuisineType = function(restaurantsObject) {
   for (var index in restaurantsObject) {
     let eachRestaurant = restaurantsObject[index].restaurant;
@@ -229,7 +224,8 @@ app.searchForCity = function (cityInformation){
   }
 };
 
-// let cuisinesList = [];
+
+app.cuisinesList = [];
 
 //loop over the Object containing arrays of each restaurant and extract the cuisines into an empty array
 // $.when(app.searchForCity)
@@ -237,6 +233,7 @@ app.searchForCity = function (cityInformation){
   // .then(function(restaurantsObject){
   //   app.getCuisineType(restaurantsObject);
   // }
+
 
 
 
