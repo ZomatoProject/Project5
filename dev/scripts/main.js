@@ -110,7 +110,7 @@ app.getCityByName = function (name){
         $('#items').append('<option value="choice">Choose City</option>' + cityOptions);
         //on click of selected city option from dropdown, get selected city id
         //store selected ID into variable and pass it as argument into next function
-        $('select').on('change', function(){
+        $('#items').on('change', function(){
           if ($(this).find('option:selected').val() === "choice"){
             console.log("Choose a city!");
           } else {
@@ -131,6 +131,10 @@ app.updateCity = function () {
     //pass in city input to cities AJAX request
     app.getCityByName(inputOfCity);
     $('#items').find('option').remove();
+
+    let inputOfCuisine = $('#')
+    //reset dropdown of cuisines to zero if new location is selected
+    $('#cuisine').find('option').remove();
     //resets array of possibleCities to zero
     app.possibleCities.length = 0;
     app.possibleCitiesId.length = 0;
@@ -167,20 +171,22 @@ app.getCuisineType = function(restaurantsObject) {
   // display cuisineOptions and default choose option in the drop down
   $('#cuisine').append('<option value="choice">Choose Cuisine</option>' + cuisineOptions);
 
-  // $('.food').on('change', function(){
-  //   if ($(this).find('option:selected').val() === "choice"){
-  //     console.log("Choose a Cuisine!");
-  //   } 
-  //     app.cuisineSelected = $(this).find('option:selected').val();
-  //     }
-  // })
 
-} 
+  $('.food').on('change', function(){
+    if ($(this).find('option:selected').val() === "choice"){
+      alert("Choose a Cuisine!");
+    } else {
+    app.cuisineSelected = $(this).val(); 
+    console.log(app.cuisineSelected);
+    }
+  }
+)}; 
 
 //pass city ID from above and dynamically insert it into new AJAX request
 //searches for city by ID and returns radius, count and cuisines nearby
 app.searchForCity = function (cityInformation){
   //.constructor is checking for the type of data of cityInformation (whether it's an array or an integer)
+  console.log('searcForCity cityInformation is set to ', cityInformation);
   if (cityInformation.constructor === Array) {
     // console.log(cityInformation);
     return $.ajax({
@@ -253,4 +259,3 @@ app.init = function (){
 $(function(){
     app.init();
 });
-
