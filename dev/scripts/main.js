@@ -34,7 +34,6 @@ app.getGeolocation = function(){
         // make a marker for user location and add to marker layer
         app.marker = L.marker(app.latLong).addTo(app.myMap);
         // Passing app.latLong to the searchForCity function
-        searchForCity(app.latLong);
         app.searchForCity(app.latLong);
     }
     function error(err){
@@ -157,16 +156,16 @@ app.searchForCity = function (cityInformation){
           lat: `${cityInformation[0]}`,//lat depending on which order it's in array
           lon: `${cityInformation[1]}`,//lon depending on which order it's in array
           radius: 1000,
-          count: 20,
+          count: 200,
           sort: 'rating',
           order: 'desc'
           }
         }).then(function(res){
-          app.restaurants = res.restaurants;
-          app.getCuisineType(cityInformation, res.restaurants);
+          // app.restaurants = res.restaurants;
+          app.getCuisineType(res.restaurants);
+          // console.log(app.restaurants);
         })
   } else {
-console.log(cityInformation);
 //if cityInformation is NOT an array (not lon/lat), insert the city ID 
  return $.ajax({
         url: 'https://developers.zomato.com/api/v2.1/search',
@@ -179,16 +178,48 @@ console.log(cityInformation);
           entity_type: 'city',
           entity_id: `${cityInformation}`,
           radius: 1000,
-          count: 20,
+          count: 200,
           sort: 'rating',
           order: 'desc'
           }
       }).then(function(res){
-        app.restaurants = res.restaurants;
-        app.getCuisineType(res.restaurants)
+        // app.restaurants = res.restaurants;
+        app.getCuisineType(res.restaurants);
+        // console.log(app.restaurants);
+        console.log(res);
       })
   }
 };
+
+let cuisinesList = [];
+
+//loop over the Object containing arrays of each restaurant and extract the cuisines into an empty array
+$.when(app.searchForCity)
+//when the searchForCity AJAX request returns a restaurants Object
+  .then(function(restaurantsObject){
+    app.getCuisineType = function (restaurantsObject) {
+      for (var index in restaurantsObject) {
+        let eachRestaurant = restaurantsObject[index].restaurant;
+        let eachCuisineType = eachRestaurant.cuisines;
+        cuisinesList.push(eachCuisineType);
+        }
+        //delete duplicates in array using onlyUnique function below
+        app.uniqueCuisineList = cuisinesList.filter( app.onlyUnique );
+      } 
+      //then return the cuisine type selected.val() into the search AJAX request
+      // let CuisineDropdown = '';
+      //   for (var i = 0; i < app.uniqueCuisineList.length; i++){
+      //     cityOptions += `<option value="${}" data-id="${possibleCitiesId[i]}">${possibleCities[i]}</option>`;
+      //     }
+      //     $('#items').append('<option value="choice">Choose city</option>' + cityOptions);
+      //display results on page 
+});
+
+
+//function that will remove duplicate values in an array
+app.onlyUnique = function (value, index, self) { 
+    return self.indexOf(value) === index;
+}
 
 
 //geolocation event handler
