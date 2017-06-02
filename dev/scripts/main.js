@@ -5,10 +5,13 @@ app.apiKey = '2e6e8448ce627a7c4abfd88090371fd4';
 
 app.latLong = [];
 
-app.cuisineArray = [];
-
 //inputOfCity stores the value of the typed city in the form
 app.inputOfCity = ''; 
+
+app.possibleCities = [];
+app.possibleCitiesId = [];
+app.unfilteredCuisinesList = [];
+
 
 //ask user for geolocation
 app.getGeolocation = function(){
@@ -37,7 +40,6 @@ app.getGeolocation = function(){
         app.marker = L.marker(app.latLong).addTo(app.myMap);
         // Passing app.latLong to the searchForCity function
         app.searchForCity(app.latLong);
-
     }
     function error(err){
         if (err.code == 0) {
@@ -77,8 +79,6 @@ L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/
 
 
 //create array to store cities returned from getCityByName AJAX request
-const possibleCities = [];
-const possibleCitiesId = [];
 
 //get restaurant ID if geolocation is NOT used
 //if geolocation is used skip this step
@@ -90,38 +90,38 @@ app.getCityByName = function (name){
         dataType: 'json',
         headers: {
             'user-key': app.apiKey
-        },
+        }, 
         data: {
-          q: name,
-          count: 20
+            q: name,
+            count: 20  
         }
       })
       .then(function(cityMatch){
         let cityNameArray = cityMatch.location_suggestions;
         for(var i = 0; i < cityNameArray.length; i++) {
           //push cities into array
-          possibleCities.push(cityNameArray[i].name);
+          app.possibleCities.push(cityNameArray[i].name);
           // console.log(cityNameArray);
-          possibleCitiesId.push(cityNameArray[i].id);
-          }
+          app.possibleCitiesId.push(cityNameArray[i].id);
+        }
         // console.log(possibleCitiesId);
           //append cities to page
         let cityOptions = '';
-        for (var i = 0; i < possibleCities.length; i++){
-          cityOptions += `<option value="${possibleCities[i]}" data-id="${possibleCitiesId[i]}">${possibleCities[i]}</option>`;
+        for (var i = 0; i < app.possibleCities.length; i++){
+          cityOptions += `<option value="${app.possibleCities[i]}" data-id="${app.possibleCitiesId[i]}">${app.possibleCities[i]}</option>`;
+        }
+        $('#items').append('<option value="choice">Choose city</option>' + cityOptions);
+        //on click of selected city option from dropdown, get selected city id
+        //store selected ID into variable and pass it as argument into next function
+        $('select').on('change', function(){
+          if ($(this).find('option:selected').val() === "choice"){
+            console.log("Choose a city!");
+          } else {
+              let optionSelected = $(this).find('option:selected').val();
+              let cityIdOfSelected = $(this).find('option:selected').data('id');
+              app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
           }
-          $('#items').append('<option value="choice">Choose city</option>' + cityOptions);
-          //on click of selected city option from dropdown, get selected city id
-          //store selected ID into variable and pass it as argument into next function
-          $('select').on('change', function(){
-            if ($(this).find('option:selected').val() === "choice"){
-              console.log("Choose a city!");
-            } else {
-                let optionSelected = $(this).find('option:selected').val();
-                let cityIdOfSelected = $(this).find('option:selected').data('id');
-                app.searchForCity(cityIdOfSelected);//insert city ID variable in search for city
-            }
-          })
+        })
       })
 }
 //end of getCityByName AJAX request//
@@ -130,15 +130,46 @@ app.getCityByName = function (name){
 app.updateCity = function () {
   $('#form').on('submit', function(e){
     e.preventDefault();
-    app.inputOfCity = $('#cityInput').val();
+    let inputOfCity = $('#cityInput').val();
     //pass in city input to cities AJAX request
-    app.getCityByName(app.inputOfCity);
+    app.getCityByName(inputOfCity);
     $('#items').find('option').remove();
     //resets array of possibleCities to zero
-    possibleCities.length = 0;
-    possibleCitiesId.length = 0;
+    app.possibleCities.length = 0;
+    app.possibleCitiesId.length = 0;
   })  
 };
+
+
+
+
+
+
+
+app.getCuisineType = function(restaurantsObject) {
+  for (var index in restaurantsObject) {
+    let eachRestaurant = restaurantsObject[index].restaurant;
+    let eachCuisineType = eachRestaurant.cuisines;
+    app.unfilteredCuisinesList.push(eachCuisineType);
+  }
+  //delete duplicates in array using onlyUnique function below
+
+  app.uniqueCuisineList = app.unfilteredCuisinesList.filter(function (value, index, self) { 
+    return self.indexOf(value) === index;
+  })
+  
+  // then return the cuisine type selected.val() into the search AJAX request
+  let cuisineOptions = '';
+  for (var i = 0; i < app.uniqueCuisineList.length; i++){
+    cuisineOptions += `<option value="${app.uniqueCuisineList[i]}"`;
+  };
+  // display results on page 
+  $('#cuisine').append(`<option value="${cuisineOptions}"</option>`);
+} 
+
+
+
+
 
 //pass city ID from above and dynamically insert it into new AJAX request
 //searches for city by ID and returns radius, count and cuisines nearby
@@ -165,12 +196,13 @@ app.searchForCity = function (cityInformation){
           }
         }).then(function(res){
           // app.restaurants = res.restaurants;
-          app.getCuisineType(res.restaurants);
+          let rest = res.restaurants;
+          app.getCuisineType(rest);
           // console.log(app.restaurants);
         })
   } else {
 //if cityInformation is NOT an array (not lon/lat), insert the city ID 
- return $.ajax({
+    return $.ajax({
         url: 'https://developers.zomato.com/api/v2.1/search',
         method: 'GET',
         dataType: 'json',
@@ -185,61 +217,40 @@ app.searchForCity = function (cityInformation){
           sort: 'rating',
           order: 'desc'
           }
-      }).then(function(res){
-        app.restaurants = res.restaurants;
-        app.getCuisineType(res.restaurants);
+      })
+      .then(function(res){
+        // app.restaurants = res.restaurants;
+        let rest = res.restaurants;
+        app.getCuisineType(rest);
+        // app.getCuisineType(restaurantsObject);
+        // console.log(app.restaurants);
         console.log(res);
       })
   }
 };
 
-// get cuisine type from top restaurant list and push into array
-app.getCuisineType = function(restaurant){
-  app.restaurants.forEach(function(restaurantItem){
-    console.log(restaurant);
-  });
-};
-
-app.cuisinesList = [];
+// let cuisinesList = [];
 
 //loop over the Object containing arrays of each restaurant and extract the cuisines into an empty array
-$.when(app.searchForCity)
+// $.when(app.searchForCity)
 //when the searchForCity AJAX request returns a restaurants Object
-  .then(function(restaurantsObject){
-    app.getCuisineType = function (restaurantsObject) {
-      for (var index in restaurantsObject) {
-        let eachRestaurant = restaurantsObject[index].restaurant;
-        let eachCuisineType = eachRestaurant.cuisines;
-        cuisinesList.push(eachCuisineType);
-        }
-        //delete duplicates in array using onlyUnique function below
-        app.uniqueCuisineList = app.cuisinesList.filter( app.onlyUnique );
-      } 
-      //then return the cuisine type selected.val() into the search AJAX request
-      // let CuisineDropdown = '';
-      //   for (var i = 0; i < app.uniqueCuisineList.length; i++){
-      //     cityOptions += `<option value="${}" data-id="${possibleCitiesId[i]}">${possibleCities[i]}</option>`;
-      //     }
-      //     $('#items').append('<option value="choice">Choose city</option>' + cityOptions);
-      //display results on page 
-});
+  // .then(function(restaurantsObject){
+  //   app.getCuisineType(restaurantsObject);
+  // }
+
+
 
 
 //function that will remove duplicate values in an array
-app.onlyUnique = function (value, index, self) { 
-    return self.indexOf(value) === index;
-}
-
+// app.onlyUnique = function (value, index, self) { 
+//     return self.indexOf(value) === index;
+// }
 
 
 //geolocation event handler
 app.events = function(){
     $(".locator").on("click", function(){
     app.getGeolocation();
-    });
-    $("#formSubmit").on("click", function(){
-      //initiate smooth scroll 
-      // 
     });
 };
 
@@ -253,4 +264,3 @@ app.init = function (){
 $(function(){
     app.init();
 });
-
