@@ -161,9 +161,9 @@ app.searchForCity = function (cityInformation){
           order: 'desc'
           }
         }).then(function(res){
-          // app.restaurants = res.restaurants;
+          app.restaurants = res.restaurants;
           app.getCuisineType(res.restaurants);
-          // console.log(app.restaurants);
+          console.log(app.restaurants);
         })
   } else {
 //if cityInformation is NOT an array (not lon/lat), insert the city ID 
@@ -183,16 +183,14 @@ app.searchForCity = function (cityInformation){
           order: 'desc'
           }
       }).then(function(res){
-        // app.restaurants = res.restaurants;
+        app.restaurants = res.restaurants;
         app.getCuisineType(res.restaurants);
-        // console.log(app.restaurants);
-        console.log(res);
+        console.log(app.restaurants);
       })
   }
 };
 
-let cuisinesList = [];
-
+app.cuisinesList = [];
 //loop over the Object containing arrays of each restaurant and extract the cuisines into an empty array
 $.when(app.searchForCity)
 //when the searchForCity AJAX request returns a restaurants Object
@@ -204,8 +202,14 @@ $.when(app.searchForCity)
         cuisinesList.push(eachCuisineType);
         }
         //delete duplicates in array using onlyUnique function below
-        app.uniqueCuisineList = cuisinesList.filter( app.onlyUnique );
-      } 
+        app.uniqueCuisineList = app.cuisinesList.filter( app.onlyUnique );
+        } 
+
+
+
+
+
+
       //then return the cuisine type selected.val() into the search AJAX request
       // let CuisineDropdown = '';
       //   for (var i = 0; i < app.uniqueCuisineList.length; i++){
