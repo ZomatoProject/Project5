@@ -168,7 +168,7 @@ app.searchForCity = function (cityInformation){
           // app.restaurants = res.restaurants;
           let rest = res.restaurants;
           app.getCuisineType(rest);
-          app.CuisineMatch(res);
+          app.cuisineMatch(rest);
           // console.log(app.restaurants);
         })
   } else {
@@ -200,21 +200,31 @@ app.searchForCity = function (cityInformation){
   }
 };
 
-let restaurantsByCuisine = [];
+const restaurantsByCuisine = [];
 
 app.cuisineMatch = function (restaurantRes){
-  console.log(restaurantRes);
-  // if (restaurantRes.cuisine === selectedCuisine) {
-  //   let cuisineMatch = restaurantRes;
-  //   restaurantsByCuisine.push(cuisineMatch)
+  restaurantRes.forEach(function(res){
+    const restaurantCuisine = res.restaurant.cuisines;
+
+    console.log(restaurantCuisine);
+  })
+  // console.log(restaurantRes[i].restaurant);
+    // console.log(restaurantRes.cuisine);
+  if (restaurantRes.cuisine === selectedCuisine) {
+    let cuisineMatch = restaurantRes;
+    restaurantsByCuisine.push(cuisineMatch)
+
   }
-}
+};
+
+
+// }
 
 // cityResults will come from calling app.cuisineMatch inside app.restaurants function
 
 // selectedCuisine will come from user selection of particular Cuisine
 
-finalResults = [restaurantsByCuisine[0], restaurantsByCuisine[1], restaurantsByCuisine[2]];
+// finalResults = [restaurantsByCuisine[0], restaurantsByCuisine[1], restaurantsByCuisine[2]];
 
 // let cuisinesList = [];
 //loop over the Object containing arrays of each restaurant and extract the cuisines into an empty array
