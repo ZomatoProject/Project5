@@ -125,7 +125,7 @@ app.getCityByName = function (name){
 
 //store city Input on click of find and update each city choice
 app.updateCity = function () {
-  $('#form').on('submit', function(e){
+  $('#citySubmit').on('click', function(e){
     e.preventDefault();
     let inputOfCity = $('#cityInput').val();
     //pass in city input to cities AJAX request
@@ -253,8 +253,23 @@ app.cuisineMatch = function (restaurantRes){
     }
   })
   //new array with top three results
-  app.finalThree = app.restaurantsByCuisine.slice(0, 3);
+app.finalThree = app.restaurantsByCuisine.slice(0, 3);
   console.log(app.finalThree);
+
+// create markers for final restaurants 
+//   app.finalThree.forEach(function(finalRest){
+//   var restMarker = L.marker([finalRest.geometry.location.lat, park.geometry.location.lng], {icon: podApp.leafIcon}, {title: park.name}).bindPopup(park.name);
+// });
+
+
+
+
+var marker = L.marker([park.geometry.location.lat, park.geometry.location.lng], {icon: podApp.leafIcon}, {title: park.name}).bindPopup(park.name);
+        // lat: park.geometry.location.lat,
+        // lng: park.geometry.location.lng
+        podApp.parksArray.push(marker);
+        marker.addTo(podApp.myMap);
+
 };
 
 //geolocation event handler
