@@ -131,11 +131,10 @@ app.updateCity = function () {
     //pass in city input to cities AJAX request
     app.getCityByName(inputOfCity);
     $('#items').find('option').remove();
-
-    let inputOfCuisine = $('#')
     //reset dropdown of cuisines to zero if new location is selected
     $('#cuisine').find('option').remove();
     //resets array of possibleCities to zero
+    app.cuisinesList.length = 0;
     app.possibleCities.length = 0;
     app.possibleCitiesId.length = 0;
   })  
@@ -177,7 +176,6 @@ app.getCuisineType = function(restaurantsObject) {
       alert("Choose a Cuisine!");
     } else {
     app.cuisineSelected = $(this).val(); 
-    console.log(app.cuisineSelected);
     }
   }
 )}; 
