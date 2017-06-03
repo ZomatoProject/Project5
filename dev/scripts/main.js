@@ -178,7 +178,7 @@ app.getCuisineType = function(restaurantsObject) {
       alert("Choose a Cuisine!");
     } else {
     app.cuisineSelected = $(this).val(); 
-    console.log(app.cuisineSelected);
+    // console.log(app.cuisineSelected);
     }
   }
 )}; 

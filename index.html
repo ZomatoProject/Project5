@@ -15,17 +15,19 @@
 
 		<div class="wrapper">
 			<h1>Nom. Nom.</h1>
-			<form action="" id="form">
+			<form action="" id="form" class="clearfix">
 				<div class="formTop" class="clearfix">
+					<div class="locator_container">
+						<button type="button" class="locator">Find My Location</button>
+					</div>
+					<span>- OR -</span>
 					<div class="cityInput_container" class="clearfix">
 						<label for="cityInput"></label>
 						<input id="cityInput" placeholder="Type your city">
 			      		<select id="items"></select>
 		      		</div>
-		      		<p>- OR -</p>
-					<button type="button" class="locator">Find My Location</button>
 				</div>
-				<div class="formBottom">
+				<div class="formBottom" class="clearfix">
 					<div class="cuisineInput_container" class="clearfix">
 						<label for="cusineInput"></label>
 						<input id="cusineInput" placeholder="I feel like eating...">
@@ -40,15 +42,45 @@
 	</header>
 	<main class="app">
 		<div class="wrapper">
-			<div class="restaurantContainer">
+			<div id="restaurantContainer">
 				<!-- here we will dynamically append the 3 top restaurants -->
+				<!-- <ul class="restaurantList">
+					<li class="restaurantItem">
+						<div class="restaurantInfo">
+							<p class="restaurantName"></p>
+							<p class="restaurantRating"></p>
+							<p class="restaurantPrice"></p>
+							<p class="restaurantReviews"></p>
+							<a href="" class="restaurantReviews">More info/reviews</a>
+						</div>
+					</li>
+					<li class="restaurantItem">
+						<div class="restaurantInfo">
+							<p class="restaurantName"></p>
+							<p class="restaurantRating"></p>
+							<p class="restaurantPrice"></p>
+							<p class="restaurantReviews"></p>
+							<a href="" class="restaurantReviews">More info/reviews</a>
+						</div>
+					</li>
+					<li class="restaurantItem">
+						<div class="restaurantInfo">
+							<p class="restaurantName"></p>
+							<p class="restaurantRating"></p>
+							<p class="restaurantPrice"></p>
+							<a href="" class="restaurantReviews">More info/reviews</a>
+						</div>
+					</li>
+				</ul>
+ -->
+
+
 			</div>
 			<div id="mapContainer">
 				
 			</div>
 		</div>
 	</main>
-
 	
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
