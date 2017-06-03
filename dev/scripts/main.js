@@ -165,6 +165,7 @@ app.getCuisineType = function(restaurantsObject) {
   // then return the cuisine type selected.val() into the search AJAX request
   let cuisineOptions = '';
   for (var i = 0; i < app.uniqueCuisineList.length; i++){
+
     cuisineOptions += `<option value="${app.uniqueCuisineList[i]}">${app.uniqueCuisineList[i]}</option>`;
   };
 
@@ -258,4 +259,6 @@ app.init = function (){
 
 $(function(){
     app.init();
+
 });
+
