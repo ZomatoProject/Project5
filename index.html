@@ -12,17 +12,31 @@
 </head>
 <body>
 	<header>
-	  <h1>Nom Nom</h1>
-	  <form action="" id="form">
-			<label for="cityInput"></label>
-			<input id="cityInput" placeholder="City" value="Toronto">
-      <select id="items"></select>
-			<button type="button" class="locator">Use your Location</button>
-			<label for="cusineInput"></label>
-	<select class="food" id="cuisine"></select>
-      <ul class="cityChoices"></ul>
-			<input type="submit" id="submit" value="">
-		</form>
+
+		<div class="wrapper">
+			<h1>Nom. Nom.</h1>
+			<form action="" id="form">
+				<div class="formTop" class="clearfix">
+					<div class="cityInput_container" class="clearfix">
+						<label for="cityInput"></label>
+						<input id="cityInput" placeholder="Type your city">
+			      		<select id="items"></select>
+		      		</div>
+		      		<p>- OR -</p>
+					<button type="button" class="locator">Find My Location</button>
+				</div>
+				<div class="formBottom">
+					<div class="cuisineInput_container" class="clearfix">
+						<label for="cusineInput"></label>
+						<input id="cusineInput" placeholder="I feel like eating...">
+						<select class="food" id="cuisine"></select>
+			      		<ul class="cityChoices"></ul>
+		      		</div>
+
+					<button type="button" id="formSubmit">Feed Me!</button>
+				</div>
+			</form>
+		</div>
 	</header>
 	<main class="app">
 		<div class="wrapper">

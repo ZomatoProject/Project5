@@ -1,0 +1,7 @@
+@mixin buttonStyle ($color: $mainGreen) {
+	font-family: $bodyFont;
+	text-transform: uppercase;
+	font-size: 16px;
+	padding: 20px;
+	border: 3px solid $color;
+}
