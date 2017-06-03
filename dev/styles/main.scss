@@ -72,8 +72,20 @@ form {
 		margin: 0 auto;
 	}
 
-	select {
+	.selectStyled {
 		float: left;
+		border: none;
+		padding: 15px;
+		border-radius: 2px;
+		background-color: #F3F4E9;
+	}
+	select {
+		background: transparent;
+		border: none;
+		padding: 15px;
+		&:focus {
+			padding: 15px;
+		}
 	}
 	.locator {
 		padding: 20px 30px;

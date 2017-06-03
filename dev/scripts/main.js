@@ -171,7 +171,7 @@ app.getCuisineType = function(restaurantsObject) {
   };
 
   // display cuisineOptions and default choose option in the drop down
-  $('#cuisine').append('<option value="choice">Choose Cuisine</option>' + cuisineOptions);
+  $('#cuisine').append(cuisineOptions);
 
 
   $('.food').on('change', function(){
@@ -258,13 +258,15 @@ app.finalThree = app.restaurantsByCuisine.slice(0, 3);
 app.finalThree.forEach(function(finalRest){
   var restMarker = L.marker([finalRest.location.latitude, finalRest.location.longitude], {icon: app.restaurantIcon}, {title: finalRest.name}).bindPopup(finalRest.name);
   
-  app.restaurantMarkers.push(restMarker);
-  restMarker.addTo(app.myMap);
-});
+    app.restaurantMarkers.push(restMarker);
+    restMarker.addTo(app.myMap);
+  });
+    var boundGroup = L.featureGroup(app.restaurantMarkers);
+    app.myMap.fitBounds(boundGroup.getBounds());
 };
 
 
-// Create custom icon for parks
+// Create custom icon for restaurants 
 app.restaurantIcon = L.icon({
     iconUrl: 'public/assets/fork.svg', 
     iconSize: [100, 100], // dimensions of the icon
