@@ -212,7 +212,7 @@ app.searchForCity = function (cityInformation){
           // app.restaurants = res.restaurants;
           let rest = res.restaurants;
           app.getCuisineType(rest);
-          // console.log(app.restaurants);
+          console.log(app.restaurants);
         })
   } else {
 //if cityInformation is NOT an array (not lon/lat), insert the city ID 
@@ -237,8 +237,8 @@ app.searchForCity = function (cityInformation){
         let rest = res.restaurants;
         app.getCuisineType(rest);
         // app.getCuisineType(restaurantsObject);
-        // console.log(app.restaurants);
-        // console.log(res);
+        console.log(app.restaurants);
+        console.log(res);
       })
   }
 };
@@ -256,7 +256,7 @@ app.cuisineMatch = function (restaurantRes){
   })
 };
 const restaurantsByCuisine = [];
-console.log(restaurantsByCuisine);
+// console.log(restaurantsByCuisine);
     // console.log(restaurantCuisine)
     // console.log(app.cuisineSelected);
 
