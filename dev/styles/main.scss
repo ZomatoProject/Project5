@@ -2,6 +2,79 @@
 @import "partials/variables";
 @import "partials/mixins";
 
+// GENERAL ****
+.wrapper {
+	max-width: 90%;
+	margin: 0 auto;
+}
+@font-face {
+	font-family: enyo-slab;
+	src: url(enyo_slab/Enyo-Slab_Regular.otf);
+}
+
+// HEADER ****
+header {
+	height: 100vh;
+	background-image: url("../assets/app-logo.svg"), linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6));
+	background-repeat: no-repeat;
+	background-position: center;
+	h1 {
+		font-family: Enyo-Slab_Regular;
+		font-size: 40px;
+		padding: 10px;
+		margin-left: 50px;
+	}
+}
+
+// FORM ****
+form {
+	width: 90%;
+	margin: 0 auto;
+	border: 1px solid red;
+	input, button, select {
+		display: block;
+		font-family: 'Roboto', sans-serif;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+	}
+
+	input {
+		padding: 15px;
+		width: 30%;
+	}
+
+	.cuisineInput_container, .cityInput_container {
+		margin: 0 auto;
+	}
+
+	#cityInput, .locator {
+		float: left;
+	}
+
+	select {
+		float: left;
+	}
+	.locator {
+		padding: 20px 30px;
+		border-radius: 2px;
+		border: none;
+	}
+	#formSubmit {
+		width: 20%;
+		margin: 0 auto;
+		background-color: $mainGreen;
+		border: none;
+		border-radius: 2px;
+		padding: 15px 20px;
+	}
+}
+
+
+
+
+
+
+// MAP ****
 
 #mapContainer {
 	height: 500px;

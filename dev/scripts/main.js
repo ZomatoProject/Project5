@@ -11,7 +11,7 @@ app.inputOfCity = '';
 app.possibleCities = [];
 app.possibleCitiesId = [];
 app.unfilteredCuisinesList = [];
-
+app.cuisinesList = [];
 
 //ask user for geolocation
 app.getGeolocation = function(){
@@ -156,10 +156,10 @@ app.getCuisineType = function(restaurantsObject) {
   // then return the cuisine type selected.val() into the search AJAX request
   let cuisineOptions = '';
   for (var i = 0; i < app.uniqueCuisineList.length; i++){
-    cuisineOptions += `<option value="${app.uniqueCuisineList[i]}"`;
+    cuisineOptions += `<option value="${app.uniqueCuisineList[i]}">`;
   };
   // display results on page 
-  $('#cuisine').append(`<option value="${cuisineOptions}"</option>`);
+  $('#cuisine').append(`${cuisineOptions}`);
 } 
 
 
@@ -225,23 +225,10 @@ app.searchForCity = function (cityInformation){
 };
 
 
-app.cuisinesList = [];
-
-//loop over the Object containing arrays of each restaurant and extract the cuisines into an empty array
-// $.when(app.searchForCity)
-//when the searchForCity AJAX request returns a restaurants Object
-  // .then(function(restaurantsObject){
-  //   app.getCuisineType(restaurantsObject);
-  // }
-
-
-
-
-
-//function that will remove duplicate values in an array
-// app.onlyUnique = function (value, index, self) { 
-//     return self.indexOf(value) === index;
-// }
+// When user clicks "feed me" button, these things need to happen:
+ // top 3 restaurants get appended to page (3 lis in a ul)
+ // map class changes from display: none to show on page
+ // marker creation functions need to fire
 
 
 //geolocation event handler
