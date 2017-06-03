@@ -112,7 +112,7 @@ app.getCityByName = function (name){
         //store selected ID into variable and pass it as argument into next function
         $('#items').on('change', function(){
           if ($(this).find('option:selected').val() === "choice"){
-            console.log("Choose a city!");
+            // console.log("Choose a city!");
           } else {
               let optionSelected = $(this).find('option:selected').val();
               let cityIdOfSelected = $(this).find('option:selected').data('id');
@@ -152,7 +152,7 @@ app.getCuisineType = function(restaurantsObject) {
     let eachRestaurant = restaurantsObject[index].restaurant;
     // "split" makes the cuisine value an array and splits it, removing anything after the comma
     eachRestaurant.cuisines = eachRestaurant.cuisines.split(",")[0];
-    console.log(eachRestaurant);
+    // console.log(eachRestaurant);
     let eachCuisineType = eachRestaurant.cuisines;
     app.unfilteredCuisinesList.push(eachCuisineType);
   }
@@ -178,7 +178,9 @@ app.getCuisineType = function(restaurantsObject) {
       alert("Choose a Cuisine!");
     } else {
     app.cuisineSelected = $(this).val(); 
-    console.log(app.cuisineSelected);
+    // console.log(app.cuisineSelected);
+    app.cuisineMatch(restaurantsObject);
+
     }
   }
 )}; 
@@ -187,7 +189,7 @@ app.getCuisineType = function(restaurantsObject) {
 //searches for city by ID and returns radius, count and cuisines nearby
 app.searchForCity = function (cityInformation){
   //.constructor is checking for the type of data of cityInformation (whether it's an array or an integer)
-  console.log('searcForCity cityInformation is set to ', cityInformation);
+  // console.log('searcForCity cityInformation is set to ', cityInformation);
   if (cityInformation.constructor === Array) {
     // console.log(cityInformation);
     return $.ajax({
@@ -202,8 +204,8 @@ app.searchForCity = function (cityInformation){
           entity_type: 'city',
           lat: `${cityInformation[0]}`,//lat depending on which order it's in array
           lon: `${cityInformation[1]}`,//lon depending on which order it's in array
-          radius: 1000,
-          count: 200,
+          radius: 100000,
+          count: 1000,
           sort: 'rating',
           order: 'desc'
           }
@@ -211,7 +213,7 @@ app.searchForCity = function (cityInformation){
           // app.restaurants = res.restaurants;
           let rest = res.restaurants;
           app.getCuisineType(rest);
-          // console.log(app.restaurants);
+          console.log(app.restaurants);
         })
   } else {
 //if cityInformation is NOT an array (not lon/lat), insert the city ID 
@@ -225,8 +227,8 @@ app.searchForCity = function (cityInformation){
         data: {
           entity_type: 'city',
           entity_id: `${cityInformation}`,
-          radius: 1000,
-          count: 200,
+          radius: 100000,
+          count: 1000,
           sort: 'rating',
           order: 'desc'
           }
@@ -236,11 +238,34 @@ app.searchForCity = function (cityInformation){
         let rest = res.restaurants;
         app.getCuisineType(rest);
         // app.getCuisineType(restaurantsObject);
-        // console.log(app.restaurants);
+        console.log(app.restaurants);
         console.log(res);
       })
   }
 };
+
+
+app.cuisineMatch = function (restaurantRes){
+  restaurantRes.forEach(function(res){
+    if (res.restaurant.cuisines === app.cuisineSelected) {
+      restaurantsByCuisine.push(res.restaurant)
+      // console.log(app.cuisineSelected);
+    }
+
+    const restaurantCuisine = res.restaurant.cuisines;
+
+  })
+};
+const restaurantsByCuisine = [];
+// console.log(restaurantsByCuisine);
+    // console.log(restaurantCuisine)
+    // console.log(app.cuisineSelected);
+
+// highestRated = restaurantsByCuisine.sort(function(a, b){
+//   const sortedResult = a.res.restaurant - b.res.restaurant;
+// })
+
+// finalResult = [sortedResult[0], sortedResult[1], sortedResult[2]];
 
 
 //geolocation event handler
