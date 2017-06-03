@@ -151,7 +151,6 @@ app.getCuisineType = function(restaurantsObject) {
     let eachRestaurant = restaurantsObject[index].restaurant;
     // "split" makes the cuisine value an array and splits it, removing anything after the comma
     eachRestaurant.cuisines = eachRestaurant.cuisines.split(",")[0];
-    console.log(eachRestaurant);
     let eachCuisineType = eachRestaurant.cuisines;
     app.unfilteredCuisinesList.push(eachCuisineType);
   }
