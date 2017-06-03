@@ -8,8 +8,8 @@
 	margin: 0 auto;
 }
 @font-face {
-	font-family: enyo-slab;
-	src: url(enyo_slab/Enyo-Slab_Regular.otf);
+	font-family: Enyo-Slab_Medium;
+	src: url(enyo_slab/Enyo-Slab_Medium.otf);
 }
 
 // HEADER ****
@@ -19,10 +19,12 @@ header {
 	background-repeat: no-repeat;
 	background-position: center;
 	h1 {
-		font-family: Enyo-Slab_Regular;
-		font-size: 40px;
+		font-family: Enyo-Slab_Medium;
+		font-size: 60px;
 		padding: 10px;
 		margin-left: 50px;
+		letter-spacing: 3px;
+
 	}
 }
 
@@ -40,15 +42,34 @@ form {
 
 	input {
 		padding: 15px;
-		width: 30%;
+	}
+
+	.formTop, .formBottom {
+		width: 100%;
 	}
 
 	.cuisineInput_container, .cityInput_container {
 		margin: 0 auto;
 	}
 
-	#cityInput, .locator {
+	.cityInput_container {
+		width: 40%;
 		float: left;
+	}
+	
+	.locator_container {
+		width: 40%;
+		float: left;
+	}
+	.cuisineInput_container {
+		clear: both;
+		width: 40%;
+		margin: 0 auto;
+	}
+
+	#cityInput {
+		float: left;
+		margin: 0 auto;
 	}
 
 	select {
@@ -58,6 +79,11 @@ form {
 		padding: 20px 30px;
 		border-radius: 2px;
 		border: none;
+		margin: 0 auto;
+	}
+
+	span {
+		float: left;
 	}
 	#formSubmit {
 		width: 20%;
@@ -71,11 +97,25 @@ form {
 
 
 
+// RESTOS ****
+#restaurantContainer {
+	width: 50%;
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		li {
+			width: 100%;
 
+		}
+	}
+}
 
 
 // MAP ****
 
 #mapContainer {
 	height: 500px;
+	width: 50%;
 }

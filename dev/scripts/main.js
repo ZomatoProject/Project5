@@ -179,6 +179,7 @@ app.getCuisineType = function(restaurantsObject) {
     } else {
     app.cuisineSelected = $(this).val(); 
     // console.log(app.cuisineSelected);
+
     app.cuisineMatch(restaurantsObject);
 
     }
