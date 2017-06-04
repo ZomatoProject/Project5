@@ -75,6 +75,9 @@ L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/
     maxZoom: 18,
 }).addTo(app.myMap);
 
+
+//create array to store cities returned from getCityByName AJAX request
+
 //get restaurant ID if geolocation is NOT used
 //if geolocation is used skip this step
 app.getCityByName = function (name){
@@ -357,4 +360,3 @@ app.init = function (){
 $(function(){
     app.init();
 });
-
