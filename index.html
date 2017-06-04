@@ -43,36 +43,19 @@
 	</header>
 	<main class="app">
 		<div class="wrapper">
-			<ul id="restaurantContainer">
-				<!-- here we will dynamically append the 3 top restaurants -->
-<!-- 					<li class="restaurantItem">
-						<div class="restaurantInfo">
-							<p class="restaurantName"></p>
-							<p class="restaurantRating"></p>
-							<p class="restaurantPrice"></p>
-							<p class="restaurantReviews"></p>
-							<a href="" class="restaurantReviews">More info/reviews</a>
-						</div>
-					</li>
-					<li class="restaurantItem">
-						<div class="restaurantInfo">
-							<p class="restaurantName"></p>
-							<p class="restaurantRating"></p>
-							<p class="restaurantPrice"></p>
-							<p class="restaurantReviews"></p>
-							<a href="" class="restaurantReviews">More info/reviews</a>
-						</div>
-					</li>
-					<li class="restaurantItem">
-						<div class="restaurantInfo">
-							<p class="restaurantName"></p>
-							<p class="restaurantRating"></p>
-							<p class="restaurantPrice"></p>
-							<a href="" class="restaurantReviews">More info/reviews</a>
-						</div>
-					</li> -->
-
-			</ul>
+			<div class="resultsContainer clearfix">
+				<script id="postTemplate" type="x-handlebars-template">
+					<div id="restaurantContainer clearfix">
+						<h2>{{name}}</h2>
+						<img src="{{image}}" alt="">
+						<ul>
+							<li><span class="bold">Rating: &nbsp; </span>{{rating}}</li>
+							<li><span class="bold">Price: &nbsp; </span>{{price}}</li>
+							<li><span class="bold">Review: &nbsp; </span>{{review}}</li>
+						</ul>
+					</div>
+				</script>
+			</div>
 			<div id="mapContainer">
 				
 			</div>
@@ -83,6 +66,7 @@
 	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
 	   integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
 	   crossorigin=""></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 	<script src="public/scripts/main.js"></script>
 </body>
 </html>

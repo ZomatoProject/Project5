@@ -11,6 +11,13 @@ app.possibleCities = [];
 app.possibleCitiesId = [];
 app.unfilteredCuisinesList = [];
 app.cuisinesList = [];
+app.restaurantsByCuisine = [];
+app.finaleThree = [];
+
+// console.log(app.restaurantsByCuisine);
+
+
+
 
 
 //ask user for geolocation
@@ -244,7 +251,7 @@ app.searchForCity = function (cityInformation){
   }
 };
 
-app.restaurantsByCuisine = [];
+
 
 app.cuisineMatch = function (restaurantRes){
   restaurantRes.forEach(function(res){
@@ -253,8 +260,54 @@ app.cuisineMatch = function (restaurantRes){
     }
   })
   //new array with top three results
-app.finalThree = app.restaurantsByCuisine.slice(0, 3);
-  console.log(app.finalThree);
+  app.finalThree = app.restaurantsByCuisine.slice(0, 3);
+    // console.log(app.finalThree);
+    app.displayFinalThree(app.finalThree);
+};
+
+// console.log(app.finalThree);
+
+app.displayFinalThree = function(finalResults) {
+  // var postsContainer = $('#restaurantContainer');
+
+    finalResults.forEach(function(post){
+
+      // console.log(post);
+    
+      var postTemplate = $('#postTemplate').html();
+      
+      var compiledTemplate = Handlebars.compile(postTemplate);
+          // console.log(post.name);
+
+          var resultInfo = {
+            name: post.name,
+            rating: post.user_rating.aggregate_rating,
+            price: post.currency,
+            review: post.url,
+            image: post.thumb
+          }
+          var resultInfoFinal = compiledTemplate(resultInfo);
+
+          $('.resultsContainer').append(resultInfoFinal);
+    });
+
+};
+
+ // append the 3 restaurants into the templates created
+// app.displayFinalThree = function(post) {
+//     var postsContainer = $('#restaurantContainer');
+//     var postTemplate = $('#postTemplate').html();
+//     app.finalThree.forEach(function(post){
+//       var templateItem = $(postTemplate);
+//       templateItem.find('.restaurantName').text(post.name);
+//       templateItem.find('.restaurantRating').text(post.user_rating.aggregate_rating);
+//       templateItem.find('.restaurantPrice').text(post.currency);
+//       templateItem.find('.restaurantReview').attr('src', post.url);
+//       //append to DOM
+//       postTemplate.append(templateItem);
+//     });
+// };
+
 
 // create markers for final restaurants 
 //   app.finalThree.forEach(function(finalRest){
@@ -264,13 +317,13 @@ app.finalThree = app.restaurantsByCuisine.slice(0, 3);
 
 
 
-var marker = L.marker([park.geometry.location.lat, park.geometry.location.lng], {icon: podApp.leafIcon}, {title: park.name}).bindPopup(park.name);
-        // lat: park.geometry.location.lat,
-        // lng: park.geometry.location.lng
-        podApp.parksArray.push(marker);
-        marker.addTo(podApp.myMap);
+// var marker = L.marker([park.geometry.location.lat, park.geometry.location.lng], {icon: podApp.leafIcon}, {title: park.name}).bindPopup(park.name);
+//         // lat: park.geometry.location.lat,
+//         // lng: park.geometry.location.lng
+//         podApp.parksArray.push(marker);
+//         marker.addTo(podApp.myMap);
 
-};
+// };
 
 //geolocation event handler
 app.events = function(){
