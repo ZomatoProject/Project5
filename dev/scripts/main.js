@@ -139,6 +139,7 @@ app.updateCity = function () {
     //resets array of possibleCities to zero
     app.possibleCities.length = 0;
     app.possibleCitiesId.length = 0;
+
   })  
 };
 
@@ -248,33 +249,98 @@ app.searchForCity = function (cityInformation){
 app.cuisineMatch = function (restaurantRes){
   restaurantRes.forEach(function(res){
     if (res.restaurant.cuisines === app.cuisineSelected) {
-      app.restaurantsByCuisine.push(res.restaurant)
+      app.restaurantsByCuisine.push(res.restaurant);
+
+
+      app.finalThree = app.restaurantsByCuisine.slice(0, 3);
+      // console.log(app.finalThree);
+
     }
   })
-//new array with top three results
-app.finalThree = app.restaurantsByCuisine.slice(0, 3);
-  console.log(app.finalThree);
-  // create markers for top three results
-app.finalThree.forEach(function(finalRest){
-  var restMarker = L.marker([finalRest.location.latitude, finalRest.location.longitude], {icon: app.restaurantIcon}, {title: finalRest.name}).bindPopup(finalRest.name);
+  //new array with top three results
+      app.displayFinalThree(app.finalThree);
+        // create markers for top three results
+      app.finalThree.forEach(function(finalRest){
+        var restMarker = L.marker([finalRest.location.latitude, finalRest.location.longitude], {icon: app.restaurantIcon}, {title: finalRest.name}).bindPopup(finalRest.name);
+        
+          app.restaurantMarkers.push(restMarker);
+          restMarker.addTo(app.myMap);
+        });
+          var boundGroup = L.featureGroup(app.restaurantMarkers);
+          app.myMap.fitBounds(boundGroup.getBounds());
+
+
+      // Create custom icon for restaurants 
+      app.restaurantIcon = L.icon({
+          iconUrl: 'public/assets/fork.svg', 
+          iconSize: [100, 100], // dimensions of the icon
+          iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
+          popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
+      });
   
-    app.restaurantMarkers.push(restMarker);
-    restMarker.addTo(app.myMap);
-  });
-    var boundGroup = L.featureGroup(app.restaurantMarkers);
-    app.myMap.fitBounds(boundGroup.getBounds());
 };
 
+//append to the restaurantContainer in APP (long way)
+app.displayFinalThree = function(finalThree) {
+  
+      $('restaurantContainer').remove();
+      const restaurantItemOne = $('<li>').addClass('restaurantItemOne');
+      const restaurantItemTwo = $('<li>').addClass('restaurantTitemTwo');
+      const restaurantItemThree = $('<li>').addClass('restaurantItemThree');
+    //rest one
+      const restName1 = $('<p class="restaurantName">').text(finalThree[0].name);
+      const restRating1 = $('<p class="restaurantRating">').text(`Rating: ${finalThree[0].user_rating.aggregate_rating}`);
+      const restPrice1 = $('<p class="restaurantPrice">').text(finalThree[0].currency);
+      const restReview1 = $('<a class="restaurantReview">Review More</a>').attr("herf",finalThree[0].url).attr("target", "_blank");
+      const restPic1 = $('<img>').attr('src', finalThree[0].featured_image);
+    
+    // //rest two
+      const restName2 = $('<p class="restaurantName">').text(finalThree[1].name);
+      const restRating2 = $('<p class="restaurantRating">').text(`Rating: ${finalThree[1].user_rating.aggregate_rating}`);
+      const restPrice2 = $('<p class="restaurantPrice">').text(finalThree[1].currency);
+      const restReview2 = $('<a class="restaurantReview">Review More</a>').attr("herf", finalThree[1].url).attr("target", "_blank");
+      const restPic2 = $('<img>').attr('src', finalThree[1].featured_image);
+   
+    //rest three
+      const restName3 = $('<p class="restaurantName">').text(finalThree[2].name);
+      const restRating3 = $('<p class="restaurantRating">').text(`Rating: ${finalThree[2].user_rating.aggregate_rating}`);
+      const restPrice3 = $('<p class="restaurantPrice">').text(finalThree[2].currency);
+      const restReview3 = $('<a class="restaurantReview">Review More</a>').attr("herf", finalThree[2].url).attr("target", "_blank");
+      const restPic3 = $('<img>').attr('src', finalThree[2].featured_image);
 
-// Create custom icon for restaurants 
-app.restaurantIcon = L.icon({
-    iconUrl: 'public/assets/fork.svg', 
-    iconSize: [100, 100], // dimensions of the icon
-    iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
-    popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
-});
+
+      restaurantItemOne.append(restName1, restRating1, restPrice1, restReview1, restPic1);
+     
+
+      restaurantItemTwo.append(restName2, restRating2, restPrice2, restReview2, restPic2);
+      
+
+      restaurantItemThree.append(restName3, restRating3, restPrice3, restReview3, restPic3);
+       
+
+      $('#restaurantContainer').append(restaurantItemOne, restaurantItemTwo, restaurantItemThree);
+     
+  };
 
 
+
+
+// Append using T E M P L A T E (failed)
+// app.displayFinalThree = function(post) {
+//     var postsContainer = $('#restaurantContainer');
+//     var postTemplate = $('#postTemplate').html();
+//     app.finalThree.forEach(function(post){
+//       var templateItem = $(postTemplate);
+
+//       templateItem.find('.restaurantName').text(post.name);
+//       templateItem.find('.restaurantRating').text(post.user_rating.aggregate_rating);
+//       templateItem.find('.restaurantPrice').text(post.currency);
+//       templateItem.find('.restaurantReview').attr('src', post.url);
+//       //append to DOM
+//       postTemplate.append(templateItem);
+//     });
+// };
+// template end
 
 
 
@@ -288,6 +354,7 @@ app.events = function(){
 app.init = function (){
     app.events();
     app.updateCity();
+   
 };
 
 $(function(){
