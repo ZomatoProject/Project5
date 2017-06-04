@@ -299,7 +299,6 @@ app.displayFinalThree = function(finalThree) {
       const restRating2 = $('<p class="restaurantRating">').text(`Rating: ${finalThree[1].user_rating.aggregate_rating}`);
       const restPrice2 = $('<p class="restaurantPrice">').text(finalThree[1].currency);
       const restReview2 = $('<a class="restaurantReview">Review More</a>').attr("herf", finalThree[1].url).attr("target", "_blank");
-      // const restReview2 = $('<a class="restaurantReviews">').attr('href', finalThree[1].url);
       const restPic2 = $('<img>').attr('src', finalThree[1].featured_image);
    
     //rest three
@@ -313,11 +312,11 @@ app.displayFinalThree = function(finalThree) {
       restaurantItemOne.append(restName1, restRating1, restPrice1, restReview1, restPic1);
      
 
-      restaurantItemTwo.append(restName2, restRating2, restPrice2, restReview2);
-      //dont forget to append restPic2 to list
+      restaurantItemTwo.append(restName2, restRating2, restPrice2, restReview2, restPic2);
+      
 
-      restaurantItemThree.append(restName3, restRating3, restPrice3, restReview3);
-       //dont forget to append restPic3 to list
+      restaurantItemThree.append(restName3, restRating3, restPrice3, restReview3, restPic3);
+       
 
       $('#restaurantContainer').append(restaurantItemOne, restaurantItemTwo, restaurantItemThree);
      

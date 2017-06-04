@@ -32,18 +32,15 @@ header {
 form {
 	width: 90%;
 	margin: 0 auto;
-	border: 1px solid red;
 	input, button, select {
 		display: block;
-		font-family: 'Roboto', sans-serif;
+		font-family: $bodyFont;
 		letter-spacing: 2px;
 		text-transform: uppercase;
 	}
-
 	input {
 		padding: 15px;
 	}
-
 	.formTop, .formBottom {
 		width: 100%;
 	}
@@ -66,17 +63,31 @@ form {
 		width: 40%;
 		margin: 0 auto;
 	}
-
 	#cityInput {
 		float: left;
 		margin: 0 auto;
+		padding: 20px 30px;
+		font-size: 20px;
+		border: 3px solid $mainGreen;
+		text-align: center;
+		&::placeholder {
+			color: $mainGreen;
+			font-weight: 700;
+		}
 	}
-
+	#citySubmit {
+		float: left;
+		padding: 20px 30px;
+		font-size: 20px;
+		background: $mainGreen;
+		border: 3px solid $mainGreen;
+		color: white;
+		text-shadow: 1px 1px 0 $mainBlack;
+	}
 	.selectStyled {
 		float: left;
 		border: none;
 		padding: 15px;
-		border-radius: 2px;
 		background-color: #F3F4E9;
 	}
 	select {
@@ -89,29 +100,52 @@ form {
 	}
 	.locator {
 		padding: 20px 30px;
-		border-radius: 2px;
-		border: none;
+		background: $mainGreen;
+		color: white;
+		text-shadow: 1px 1px 0 $mainBlack;
+		font-weight: 700;
+		font-size: 20px;
+		border: 3px solid transparent;
+		cursor: pointer;
 		margin: 0 auto;
+		transition: all 0.3s ease;
+		&:hover {
+			color: $mainGreen;
+			background: white;
+			border: 3px solid $mainGreen;
+		}
 	}
-
 	span {
 		float: left;
+		font-family: Enyo-Slab_Medium;
+		font-size: 24px;
+		letter-spacing: 3px;
+		font-weight: 700;
 	}
 	#formSubmit {
-		width: 20%;
+		padding: 20px 30px;
+		background: $mainGreen;
+		color: white;
+		text-shadow: 1px 1px 0 $mainBlack;
+		font-weight: 700;
+		font-size: 20px;
+		border: 3px solid transparent;
+		cursor: pointer;
 		margin: 0 auto;
-		background-color: $mainGreen;
-		border: none;
-		border-radius: 2px;
-		padding: 15px 20px;
+		&:hover {
+			background: $mainCream;
+			color: $mainBlack;
+			text-shadow: none;
+			border: 4px solid $mainBlack;
+			animation: bounce 1s;
+		}
 	}
 }
-
-
 
 // RESTOS ****
 #restaurantContainer {
 	width: 50%;
+	float: left;
 	ul {
 		list-style: none;
 		margin: 0;
@@ -119,7 +153,16 @@ form {
 		width: 100%;
 		li {
 			width: 100%;
-
+			.restaurantInfo {
+				width: 30%;
+				.restaurantName, .restaurantRating, .restaurantPrice, .restaurantReviews {
+					padding: 5px;
+					background: $mainCream;
+					font-family: $bodyFont;
+					font-size: 16px;
+					letter-spacing: 1px;
+				}
+			}
 		}
 	}
 }
@@ -130,4 +173,5 @@ form {
 #mapContainer {
 	height: 500px;
 	width: 50%;
+	float: left;
 }
