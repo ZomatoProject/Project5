@@ -140,9 +140,9 @@ app.updateCity = function() {
     //pass in city input to cities AJAX request
     app.getCityByName(inputOfCity);
     $("#items").find("option").remove();
-
     //reset dropdown of cuisines to zero if new location is selected
     $("#cuisine").find("option").remove();
+    $(".citySelect").addClass("citySelectShow");
     //resets array of possibleCities to zero
     app.possibleCities.length = 0;
     app.possibleCitiesId.length = 0;
