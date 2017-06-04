@@ -11,7 +11,8 @@ app.possibleCities = [];
 app.possibleCitiesId = [];
 app.unfilteredCuisinesList = [];
 app.cuisinesList = [];
-
+app.restaurantsByCuisine = [];
+app.restaurantMarkers = [];
 
 //ask user for geolocation
 app.getGeolocation = function(){
@@ -37,7 +38,7 @@ app.getGeolocation = function(){
         // Pass user coordinates to leaflet to render map
         app.myMap.panTo(app.latLong); 
         // make a marker for user location and add to marker layer
-        app.marker = L.marker(app.latLong).addTo(app.myMap);
+        app.userMarker = L.marker(app.latLong).addTo(app.myMap);
         // Passing app.latLong to the searchForCity function
         app.searchForCity(app.latLong);
     }
@@ -171,7 +172,7 @@ app.getCuisineType = function(restaurantsObject) {
   };
 
   // display cuisineOptions and default choose option in the drop down
-  $('#cuisine').append('<option value="choice">Choose Cuisine</option>' + cuisineOptions);
+  $('#cuisine').append(cuisineOptions);
 
 
   $('.food').on('change', function(){
@@ -206,7 +207,7 @@ app.searchForCity = function (cityInformation){
           entity_type: 'city',
           lat: `${cityInformation[0]}`,//lat depending on which order it's in array
           lon: `${cityInformation[1]}`,//lon depending on which order it's in array
-          radius: 100000,
+          radius: 2000,
           count: 1000,
           sort: 'rating',
           order: 'desc'
@@ -228,7 +229,7 @@ app.searchForCity = function (cityInformation){
         data: {
           entity_type: 'city',
           entity_id: `${cityInformation}`,
-          radius: 100000,
+          radius: 2000,
           count: 1000,
           sort: 'rating',
           order: 'desc'
@@ -244,8 +245,6 @@ app.searchForCity = function (cityInformation){
       })
   }
 };
-
-app.restaurantsByCuisine = [];
 
 app.cuisineMatch = function (restaurantRes){
   restaurantRes.forEach(function(res){
@@ -270,19 +269,19 @@ app.displayFinalThree = function(finalThree) {
       const restaurantItemOne = $('<li>').addClass('restaurantItemOne');
       const restaurantItemTwo = $('<li>').addClass('restaurantTitemTwo');
       const restaurantItemThree = $('<li>').addClass('restaurantItemThree');
-  //rest one
+    //rest one
       const restName1 = $('<p>').text(finalThree[0].name);
       const restRating1 = $('<p>').text(`Rating: ${finalThree[0].user_rating.aggregate_rating}`);
       const restPrice1 = $('<p>').text(finalThree[0].currency);
       const restReview1 = $('<a>').attr('href', finalThree[0].url);
       const restPic1 = $('<img>').attr('src', finalThree[0].featured_image);
- // //rest two
+    // //rest two
       const restName2 = $('<p>').text(finalThree[1].name);
       const restRating2 = $('<p>').text(`Rating: ${finalThree[1].user_rating.aggregate_rating}`);
       const restPrice2 = $('<p>').text(finalThree[1].currency);
       const restReview2 = $('<a>').attr('href', finalThree[1].url);
       // const restPic2 = $('<img>').attr('src', finalThree[1].featured_image);
- //rest three
+    //rest three
       const restName3 = $('<p>').text(finalThree[2].name);
       const restRating3 = $('<p>').text(`Rating: ${finalThree[2].user_rating.aggregate_rating}`);
       const restPrice3 = $('<p>').text(finalThree[2].currency);
@@ -303,6 +302,25 @@ app.displayFinalThree = function(finalThree) {
      
   };
 
+  // create markers for top three results
+app.finalThree.forEach(function(finalRest){
+  var restMarker = L.marker([finalRest.location.latitude, finalRest.location.longitude], {icon: app.restaurantIcon}, {title: finalRest.name}).bindPopup(finalRest.name);
+  
+    app.restaurantMarkers.push(restMarker);
+    restMarker.addTo(app.myMap);
+  });
+    var boundGroup = L.featureGroup(app.restaurantMarkers);
+    app.myMap.fitBounds(boundGroup.getBounds());
+
+
+// Create custom icon for restaurants 
+app.restaurantIcon = L.icon({
+    iconUrl: 'public/assets/fork.svg', 
+    iconSize: [100, 100], // dimensions of the icon
+    iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
+    popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
+});
+
 
 
 
@@ -322,8 +340,6 @@ app.displayFinalThree = function(finalThree) {
 //     });
 // };
 // template end
-
-
 
 
 
