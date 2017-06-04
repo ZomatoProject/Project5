@@ -138,6 +138,7 @@ app.updateCity = function () {
     //resets array of possibleCities to zero
     app.possibleCities.length = 0;
     app.possibleCitiesId.length = 0;
+
   })  
 };
 
@@ -249,28 +250,82 @@ app.restaurantsByCuisine = [];
 app.cuisineMatch = function (restaurantRes){
   restaurantRes.forEach(function(res){
     if (res.restaurant.cuisines === app.cuisineSelected) {
-      app.restaurantsByCuisine.push(res.restaurant)
+      app.restaurantsByCuisine.push(res.restaurant);
+
+
+      app.finalThree = app.restaurantsByCuisine.slice(0, 3);
+      // console.log(app.finalThree);
+
     }
   })
   //new array with top three results
-app.finalThree = app.restaurantsByCuisine.slice(0, 3);
-  console.log(app.finalThree);
-
-// create markers for final restaurants 
-//   app.finalThree.forEach(function(finalRest){
-//   var restMarker = L.marker([finalRest.geometry.location.lat, park.geometry.location.lng], {icon: podApp.leafIcon}, {title: park.name}).bindPopup(park.name);
-// });
-
-
-
-
-var marker = L.marker([park.geometry.location.lat, park.geometry.location.lng], {icon: podApp.leafIcon}, {title: park.name}).bindPopup(park.name);
-        // lat: park.geometry.location.lat,
-        // lng: park.geometry.location.lng
-        podApp.parksArray.push(marker);
-        marker.addTo(podApp.myMap);
-
+      app.displayFinalThree(app.finalThree);
+  
 };
+
+//append to the restaurantContainer in APP (long way)
+app.displayFinalThree = function(finalThree) {
+  
+      $('restaurantContainer').remove();
+      const restaurantItemOne = $('<li>').addClass('restaurantItemOne');
+      const restaurantItemTwo = $('<li>').addClass('restaurantTitemTwo');
+      const restaurantItemThree = $('<li>').addClass('restaurantItemThree');
+  //rest one
+      const restName1 = $('<p>').text(finalThree[0].name);
+      const restRating1 = $('<p>').text(`Rating: ${finalThree[0].user_rating.aggregate_rating}`);
+      const restPrice1 = $('<p>').text(finalThree[0].currency);
+      const restReview1 = $('<a>').attr('href', finalThree[0].url);
+      const restPic1 = $('<img>').attr('src', finalThree[0].featured_image);
+ // //rest two
+      const restName2 = $('<p>').text(finalThree[1].name);
+      const restRating2 = $('<p>').text(`Rating: ${finalThree[1].user_rating.aggregate_rating}`);
+      const restPrice2 = $('<p>').text(finalThree[1].currency);
+      const restReview2 = $('<a>').attr('href', finalThree[1].url);
+      // const restPic2 = $('<img>').attr('src', finalThree[1].featured_image);
+ //rest three
+      const restName3 = $('<p>').text(finalThree[2].name);
+      const restRating3 = $('<p>').text(`Rating: ${finalThree[2].user_rating.aggregate_rating}`);
+      const restPrice3 = $('<p>').text(finalThree[2].currency);
+      const restReview3 = $('<a>').attr('href', finalThree[2].url);
+      // const restPic3 = $('<img>').attr('src', finalThree[2].featured_image);
+
+
+      restaurantItemOne.append(restName1, restRating1, restPrice1, restReview1, restPic1);
+     
+
+      restaurantItemTwo.append(restName2, restRating2, restPrice2, restReview2);
+      //dont forget to append restPic2 to list
+
+      restaurantItemThree.append(restName3, restRating3, restPrice3, restReview3);
+       //dont forget to append restPic3 to list
+
+      $('#restaurantContainer').append(restaurantItemOne, restaurantItemTwo, restaurantItemThree);
+     
+  };
+
+
+
+
+// Append using T E M P L A T E (failed)
+// app.displayFinalThree = function(post) {
+//     var postsContainer = $('#restaurantContainer');
+//     var postTemplate = $('#postTemplate').html();
+//     app.finalThree.forEach(function(post){
+//       var templateItem = $(postTemplate);
+
+//       templateItem.find('.restaurantName').text(post.name);
+//       templateItem.find('.restaurantRating').text(post.user_rating.aggregate_rating);
+//       templateItem.find('.restaurantPrice').text(post.currency);
+//       templateItem.find('.restaurantReview').attr('src', post.url);
+//       //append to DOM
+//       postTemplate.append(templateItem);
+//     });
+// };
+// template end
+
+
+
+
 
 //geolocation event handler
 app.events = function(){
@@ -282,6 +337,7 @@ app.events = function(){
 app.init = function (){
     app.events();
     app.updateCity();
+   
 };
 
 $(function(){
