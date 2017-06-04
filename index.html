@@ -24,15 +24,21 @@
 					<div class="cityInput_container" class="clearfix">
 						<label for="cityInput"></label>
 						<input id="cityInput" placeholder="Type your city">
-						<button type="button" id="citySubmit"></button>
-			      		<select id="items"></select>
+						<button type="button" id="citySubmit">Go</button>
+						<div class="selectStyled citySelect">
+			      			<select id="items"></select>
+			      		</div>
 		      		</div>
 				</div>
 				<div class="formBottom" class="clearfix">
 					<div class="cuisineInput_container" class="clearfix">
 						<label for="cusineInput"></label>
-						<input id="cusineInput" placeholder="I feel like eating...">
-						<select class="food" id="cuisine"></select>
+						<!-- <input id="cusineInput" placeholder="I feel like eating..."> -->
+						<div class="selectStyled foodSelect">
+							<select class="food" id="cuisine">
+								<option selected="selected">Pick a Cuisine</option>
+							</select>
+						</div>
 			      		<ul class="cityChoices"></ul>
 		      		</div>
 

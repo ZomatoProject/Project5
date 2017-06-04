@@ -11,7 +11,8 @@ app.possibleCities = [];
 app.possibleCitiesId = [];
 app.unfilteredCuisinesList = [];
 app.cuisinesList = [];
-
+app.restaurantsByCuisine = [];
+app.restaurantMarkers = [];
 
 //ask user for geolocation
 app.getGeolocation = function(){
@@ -37,7 +38,7 @@ app.getGeolocation = function(){
         // Pass user coordinates to leaflet to render map
         app.myMap.panTo(app.latLong); 
         // make a marker for user location and add to marker layer
-        app.marker = L.marker(app.latLong).addTo(app.myMap);
+        app.userMarker = L.marker(app.latLong).addTo(app.myMap);
         // Passing app.latLong to the searchForCity function
         app.searchForCity(app.latLong);
     }
@@ -170,7 +171,7 @@ app.getCuisineType = function(restaurantsObject) {
   };
 
   // display cuisineOptions and default choose option in the drop down
-  $('#cuisine').append('<option value="choice">Choose Cuisine</option>' + cuisineOptions);
+  $('#cuisine').append(cuisineOptions);
 
 
   $('.food').on('change', function(){
@@ -205,7 +206,7 @@ app.searchForCity = function (cityInformation){
           entity_type: 'city',
           lat: `${cityInformation[0]}`,//lat depending on which order it's in array
           lon: `${cityInformation[1]}`,//lon depending on which order it's in array
-          radius: 100000,
+          radius: 2000,
           count: 1000,
           sort: 'rating',
           order: 'desc'
@@ -227,7 +228,7 @@ app.searchForCity = function (cityInformation){
         data: {
           entity_type: 'city',
           entity_id: `${cityInformation}`,
-          radius: 100000,
+          radius: 2000,
           count: 1000,
           sort: 'rating',
           order: 'desc'
@@ -244,33 +245,38 @@ app.searchForCity = function (cityInformation){
   }
 };
 
-app.restaurantsByCuisine = [];
-
 app.cuisineMatch = function (restaurantRes){
   restaurantRes.forEach(function(res){
     if (res.restaurant.cuisines === app.cuisineSelected) {
       app.restaurantsByCuisine.push(res.restaurant)
     }
   })
-  //new array with top three results
+//new array with top three results
 app.finalThree = app.restaurantsByCuisine.slice(0, 3);
   console.log(app.finalThree);
-
-// create markers for final restaurants 
-//   app.finalThree.forEach(function(finalRest){
-//   var restMarker = L.marker([finalRest.geometry.location.lat, park.geometry.location.lng], {icon: podApp.leafIcon}, {title: park.name}).bindPopup(park.name);
-// });
-
-
-
-
-var marker = L.marker([park.geometry.location.lat, park.geometry.location.lng], {icon: podApp.leafIcon}, {title: park.name}).bindPopup(park.name);
-        // lat: park.geometry.location.lat,
-        // lng: park.geometry.location.lng
-        podApp.parksArray.push(marker);
-        marker.addTo(podApp.myMap);
-
+  // create markers for top three results
+app.finalThree.forEach(function(finalRest){
+  var restMarker = L.marker([finalRest.location.latitude, finalRest.location.longitude], {icon: app.restaurantIcon}, {title: finalRest.name}).bindPopup(finalRest.name);
+  
+    app.restaurantMarkers.push(restMarker);
+    restMarker.addTo(app.myMap);
+  });
+    var boundGroup = L.featureGroup(app.restaurantMarkers);
+    app.myMap.fitBounds(boundGroup.getBounds());
 };
+
+
+// Create custom icon for restaurants 
+app.restaurantIcon = L.icon({
+    iconUrl: 'public/assets/fork.svg', 
+    iconSize: [100, 100], // dimensions of the icon
+    iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
+    popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
+});
+
+
+
+
 
 //geolocation event handler
 app.events = function(){
