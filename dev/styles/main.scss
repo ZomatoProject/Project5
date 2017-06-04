@@ -34,15 +34,13 @@ form {
 	margin: 0 auto;
 	input, button, select {
 		display: block;
-		font-family: 'Roboto', sans-serif;
+		font-family: $bodyFont;
 		letter-spacing: 2px;
 		text-transform: uppercase;
 	}
-
 	input {
 		padding: 15px;
 	}
-
 	.formTop, .formBottom {
 		width: 100%;
 	}
@@ -65,7 +63,6 @@ form {
 		width: 40%;
 		margin: 0 auto;
 	}
-
 	#cityInput {
 		float: left;
 		margin: 0 auto;
@@ -87,7 +84,6 @@ form {
 		color: white;
 		text-shadow: 1px 1px 0 $mainBlack;
 	}
-
 	.selectStyled {
 		float: left;
 		border: none;
@@ -119,7 +115,6 @@ form {
 			border: 3px solid $mainGreen;
 		}
 	}
-
 	span {
 		float: left;
 		font-family: Enyo-Slab_Medium;
@@ -147,11 +142,10 @@ form {
 	}
 }
 
-
-
 // RESTOS ****
 #restaurantContainer {
 	width: 50%;
+	float: left;
 	ul {
 		list-style: none;
 		margin: 0;
@@ -159,7 +153,16 @@ form {
 		width: 100%;
 		li {
 			width: 100%;
-
+			.restaurantInfo {
+				width: 30%;
+				.restaurantName, .restaurantRating, .restaurantPrice, .restaurantReviews {
+					padding: 5px;
+					background: $mainCream;
+					font-family: $bodyFont;
+					font-size: 16px;
+					letter-spacing: 1px;
+				}
+			}
 		}
 	}
 }
@@ -170,4 +173,5 @@ form {
 #mapContainer {
 	height: 500px;
 	width: 50%;
+	float: left;
 }
