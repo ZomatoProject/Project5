@@ -11,7 +11,8 @@ app.possibleCities = [];
 app.possibleCitiesId = [];
 app.unfilteredCuisinesList = [];
 app.cuisinesList = [];
-
+app.restaurantsByCuisine = [];
+app.restaurantMarkers = [];
 
 //ask user for geolocation
 app.getGeolocation = function(){
@@ -37,7 +38,7 @@ app.getGeolocation = function(){
         // Pass user coordinates to leaflet to render map
         app.myMap.panTo(app.latLong); 
         // make a marker for user location and add to marker layer
-        app.marker = L.marker(app.latLong).addTo(app.myMap);
+        app.userMarker = L.marker(app.latLong).addTo(app.myMap);
         // Passing app.latLong to the searchForCity function
         app.searchForCity(app.latLong);
     }
@@ -125,7 +126,7 @@ app.getCityByName = function (name){
 
 //store city Input on click of find and update each city choice
 app.updateCity = function () {
-  $('#form').on('submit', function(e){
+  $('#citySubmit').on('click', function(e){
     e.preventDefault();
     let inputOfCity = $('#cityInput').val();
     //pass in city input to cities AJAX request
@@ -167,7 +168,7 @@ app.getCuisineType = function(restaurantsObject) {
   };
 
   // display cuisineOptions and default choose option in the drop down
-  $('#cuisine').append('<option value="choice">Choose Cuisine</option>' + cuisineOptions);
+  $('#cuisine').append(cuisineOptions);
 
 
   $('.food').on('change', function(){
@@ -175,6 +176,7 @@ app.getCuisineType = function(restaurantsObject) {
       alert("Choose a Cuisine!");
     } else {
     app.cuisineSelected = $(this).val(); 
+    app.cuisineMatch(restaurantsObject);
     }
   }
 )}; 
@@ -204,10 +206,9 @@ app.searchForCity = function (cityInformation){
           order: 'desc'
           }
         }).then(function(res){
-          // app.restaurants = res.restaurants;
+          app.restaurants = res.restaurants;
           let rest = res.restaurants;
           app.getCuisineType(rest);
-          // console.log(app.restaurants);
         })
   } else {
 //if cityInformation is NOT an array (not lon/lat), insert the city ID 
@@ -228,15 +229,48 @@ app.searchForCity = function (cityInformation){
           }
       })
       .then(function(res){
-        // app.restaurants = res.restaurants;
+        app.restaurants = res.restaurants;
         let rest = res.restaurants;
         app.getCuisineType(rest);
-        // app.getCuisineType(restaurantsObject);
-        // console.log(app.restaurants);
+        app.getCuisineType(restaurantsObject);
+        console.log(app.restaurants);
         console.log(res);
       })
   }
 };
+
+
+app.cuisineMatch = function (restaurantRes){
+  restaurantRes.forEach(function(res){
+    if (res.restaurant.cuisines === app.cuisineSelected) {
+      app.restaurantsByCuisine.push(res.restaurant)
+    }
+  })
+//new array with top three results
+app.finalThree = app.restaurantsByCuisine.slice(0, 3);
+  console.log(app.finalThree);
+  // create markers for top three results
+app.finalThree.forEach(function(finalRest){
+  var restMarker = L.marker([finalRest.location.latitude, finalRest.location.longitude], {icon: app.restaurantIcon}, {title: finalRest.name}).bindPopup(finalRest.name);
+  
+    app.restaurantMarkers.push(restMarker);
+    restMarker.addTo(app.myMap);
+  });
+    var boundGroup = L.featureGroup(app.restaurantMarkers);
+    app.myMap.fitBounds(boundGroup.getBounds());
+};
+
+
+// Create custom icon for restaurants 
+app.restaurantIcon = L.icon({
+    iconUrl: 'public/assets/fork.svg', 
+    iconSize: [100, 100], // dimensions of the icon
+    iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
+    popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
+});
+
+
+
 
 
 //geolocation event handler
@@ -246,13 +280,12 @@ app.events = function(){
     });
 };
 
-
 app.init = function (){
     app.events();
     app.updateCity();
-
 };
 
 $(function(){
     app.init();
 });
+
