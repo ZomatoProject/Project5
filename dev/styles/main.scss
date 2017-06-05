@@ -1,276 +1,254 @@
 @import "partials/setup";
 @import "partials/variables";
 @import "partials/mixins";
-
 // GENERAL ****
 .wrapper {
-	max-width: 90%;
-	margin: 0 auto;
+    max-width: 90%;
+    margin: 0 auto;
 }
 @font-face {
-	font-family: Enyo-Slab_Medium;
-	src: url(enyo_slab/Enyo-Slab_Medium.otf);
+    font-family: Enyo-Slab_Medium;
+    src: url(enyo_slab/Enyo-Slab_Medium.otf);
 }
-
 // HEADER ****
 header {
-	height: 100vh;
-	background-image: url("../assets/app-logo.svg"), linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6));
-	background-repeat: no-repeat;
-	background-position: center;
-	h1 {
-		font-family: Enyo-Slab_Medium;
-		font-size: 60px;
-		padding: 10px;
-		margin-left: 50px;
-		letter-spacing: 3px;
-
-	}
+    height: 100vh;
+    background-image: url("../assets/app-logo.svg"), linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6));
+    background-repeat: no-repeat;
+    background-position: center;
+    h1 {
+        font-family: Enyo-Slab_Medium;
+        font-size: 60px;
+        padding: 10px;
+        margin-left: 50px;
+        letter-spacing: 3px;
+    }
 }
-
 // FORM ****
 form {
-	width: 90%;
-	margin: 50px auto 0 auto;
-	input, button, select {
-		display: block;
-		font-family: $bodyFont;
-		letter-spacing: 2px;
-		text-transform: uppercase;
-	}
-	input {
-		padding: 15px;
-	}
-	.formTop, .formBottom {
-		width: 100%;
-		margin: 0 auto;
-		clear: both;
-	}
-	.formTop {
-		height: 20vh;
-	}
-
-	.cityInput_container, .locator_container {
-		float: left;
-	}
-
-	.cityInput_container {
-		margin: 0 auto;
-	}
-
-	.cuisineInput_container {
-		clear: both;
-		margin: 0 auto;
-		width: 40%;
-	}
-	#cityInput {
-		float: left;
-		margin: 0 auto;
-		padding: 20px 30px;
-		font-size: 20px;
-		border: 3px solid $mainGreen;
-		text-align: center;
-		&::placeholder {
-			color: $mainGreen;
-			font-weight: 700;
-		}
-	}
-	#citySubmit {
-		float: left;
-		padding: 20px 30px;
-		font-size: 20px;
-		background: $mainGreen;
-		border: 3px solid $mainGreen;
-		color: white;
-		text-shadow: 1px 1px 0 $mainBlack;
-	}
-	.selectStyled {
-		float: left;
-		border: none;
-		padding: 15px;
-		background-color: #F3F4E9;
-	}
-
-	.citySelect {
-		display: none;
-	}
-
-	.citySelectShow{
-		display: block;
-	}
-	select {
-		background: transparent;
-		border: none;
-		padding: 15px;
-		&:focus {
-			padding: 15px;
-		}
-	}
-	.locator {
-		padding: 20px 30px;
-		background: $mainGreen;
-		color: white;
-		text-shadow: 1px 1px 0 $mainBlack;
-		font-weight: 700;
-		font-size: 20px;
-		border: 3px solid transparent;
-		cursor: pointer;
-		margin: 0 auto;
-		transition: all 0.3s ease;
-		&:hover {
-			color: $mainGreen;
-			background: white;
-			border: 3px solid $mainGreen;
-		}
-	}
-
-	.foodSelect {
-		width: 100%;
-		margin: 75px auto 0 auto;
-	}
-	#cuisine {
-		width: 100%;
-	}
-
-	span {
-		float: left;
-		font-family: Enyo-Slab_Medium;
-		font-size: 24px;
-		letter-spacing: 3px;
-		font-weight: 700;
-		margin-top: 25px;
-		text-align: center;
-	}
-	#formSubmit {
-		padding: 20px 30px;
-		background: $mainGreen;
-		clear: both;
-		color: white;
-		text-shadow: 1px 1px 0 $mainBlack;
-		font-weight: 700;
-		font-size: 20px;
-		border: 3px solid transparent;
-		cursor: pointer;
-		margin: 75px auto 0 auto;
-		&:hover {
-			background: $mainCream;
-			color: $mainBlack;
-			text-shadow: none;
-			border: 4px solid $mainBlack;
-			animation: bounce 1s;
-		}
-	}
+    width: 90%;
+    margin: 50px auto 0 auto;
+    input, button, select {
+        display: block;
+        font-family: $bodyFont;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+    input {
+        padding: 15px;
+    }
+    .formTop, .formBottom {
+        width: 100%;
+        margin: 0 auto;
+        clear: both;
+    }
+    .formTop {
+        height: 20vh;
+    }
+    .cityInput_container, .locator_container {
+        float: left;
+    }
+    .cityInput_container {
+        margin: 0 auto;
+    }
+    .cuisineInput_container {
+        clear: both;
+        margin: 0 auto;
+        width: 40%;
+    }
+    #cityInput {
+        float: left;
+        margin: 0 auto;
+        padding: 20px 30px;
+        font-size: 20px;
+        border: 3px solid $mainGreen;
+        text-align: center;
+        &::placeholder {
+            color: $mainGreen;
+            font-weight: 700;
+        }
+    }
+    #citySubmit {
+        float: left;
+        padding: 20px 30px;
+        font-size: 20px;
+        background: $mainGreen;
+        border: 3px solid $mainGreen;
+        color: white;
+        text-shadow: 1px 1px 0 $mainBlack;
+    }
+    .selectStyled {
+        float: left;
+        border: none;
+        padding: 15px;
+        background-color: #F3F4E9;
+    }
+    .citySelect {
+        display: none;
+    }
+    .citySelectShow{
+        display: block;
+    }
+    select {
+        background: transparent;
+        border: none;
+        padding: 15px;
+        &:focus {
+            padding: 15px;
+        }
+    }
+    .locator {
+        padding: 20px 30px;
+        background: $mainGreen;
+        color: white;
+        text-shadow: 1px 1px 0 $mainBlack;
+        font-weight: 700;
+        font-size: 20px;
+        border: 3px solid transparent;
+        cursor: pointer;
+        margin: 0 auto;
+        transition: all 0.3s ease;
+        &:hover {
+            color: $mainGreen;
+            background: white;
+            border: 3px solid $mainGreen;
+        }
+    }
+    .foodSelect {
+        width: 100%;
+        margin: 75px auto 0 auto;
+    }
+    #cuisine {
+        width: 100%;
+    }
+    span {
+        float: left;
+        font-family: Enyo-Slab_Medium;
+        font-size: 24px;
+        letter-spacing: 3px;
+        font-weight: 700;
+        margin-top: 25px;
+        text-align: center;
+    }
+    #formSubmit {
+        padding: 20px 30px;
+        background: $mainGreen;
+        clear: both;
+        color: white;
+        text-shadow: 1px 1px 0 $mainBlack;
+        font-weight: 700;
+        font-size: 20px;
+        border: 3px solid transparent;
+        cursor: pointer;
+        margin: 75px auto 0 auto;
+        &:hover {
+            background: $mainCream;
+            color: $mainBlack;
+            text-shadow: none;
+            border: 4px solid $mainBlack;
+            animation: bounce 1s;
+        }
+    }
 }
-
 // RESTOS ****
 #restaurantContainer {
-	width: 50%;
-	float: left;
-	ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		width: 100%;
-		li {
-			width: 100%;
-			.restaurantInfo {
-				width: 30%;
-				.restaurantName, .restaurantRating, .restaurantPrice, .restaurantReviews {
-					padding: 5px;
-					background: $mainCream;
-					font-family: $bodyFont;
-					font-size: 16px;
-					letter-spacing: 1px;
-				}
-			}
-		}
-	}
+    width: 50%;
+    float: left;
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        li {
+            width: 100%;
+            .restaurantInfo {
+                width: 30%;
+                .restaurantName, .restaurantRating, .restaurantPrice, .restaurantReviews {
+                    padding: 5px;
+                    background: $mainCream;
+                    font-family: $bodyFont;
+                    font-size: 16px;
+                    letter-spacing: 1px;
+                }
+            }
+        }
+    }
 }
-
-
 // MAP ****
-
 #mapContainer {
-	height: 500px;
-	width: 50%;
-	float: left;
+    height: 500px;
+    width: 50%;
+    float: left;
 }
-
-
 // MEDIA QUERIES ****
-
-/* Portrait tablet and small desktops */
+// /* Portrait tablet and small desktops */
 @media (max-width: 940px) {
 form {
-	.cityInput_container, .locator_container {
-		float: none;
-		width: 100%;
-	}
-	.cityInput_container {
-		margin: 0 auto;
-	}
-	.cuisineInput_container {
-		margin: 40px auto;
-		width: 50%;
-	}
-	#cityInput {
-		float: none;
-		display: inline-block;
-		margin: 0 auto;
-		padding: 20px 30px;
-		font-size: 20px;
-		text-align: center;
-	}
-	#citySubmit {
-		float: none;
-		display: inline-block;
-	}
-	.selectStyled {
-		float: none;
-	}
-	select {
-		padding: 15px;
-		&:focus {
-			padding: 15px;
-		}
-	}
-	.locator {
-		padding: 20px 30px;
-	}
-	.foodSelect {
-		width: 100%;
-		margin: 75px auto 0 auto;
-	}
-
-	span {
-		float: none;
-		display: inline-block;
-		width: 100%;
-		text-align: center;
-	}
+    .cityInput_container, .locator_container {
+        float: none;
+        width: 100%;
+    }
+    .cityInput_container {
+        margin: 0 auto;
+    }
+    .cuisineInput_container {
+        margin: 40px auto;
+        width: 50%;
+    }
+    #cityInput {
+        float: none;
+        display: inline-block;
+        margin: 0 auto;
+        padding: 20px 30px;
+        font-size: 20px;
+        text-align: center;
+    }
+    #citySubmit {
+        float: none;
+        display: inline-block;
+    }
+    .selectStyled {
+        float: none;
+    }
+    select {
+        padding: 15px;
+        &:focus {
+            padding: 15px;
+        }
+    }
+    .locator {
+        padding: 20px 30px;
+    }
+    .foodSelect {
+        width: 100%;
+        margin: 75px auto 0 auto;
+    }
+    span {
+        float: none;
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+    }
 }
 }
-
-/* Landscape phone to portrait tablet */
+// /* Landscape phone to portrait tablet */
 @media (max-width: 768px) {
-	#mapContainer {
-	height: 300px;
-	width: 100%;
-	float: none;
+    #mapContainer {
+    height: 300px;
+    width: 100%;
+    float: none;
 }
-
 #restaurantContainer {
-	width: 100%;
-	float: none;
-	}
+    width: 100%;
+    float: none;
+    }
 }
-
-/* Landscape phones and down */
+// /* Landscape phones and down */
 @media (max-width: 480px) {
-	form {
-		width: 100%;
-		#citySubmit {
-			padding: 20px 15px;
-		}
-	}
+    form {
+        width: 100%;
+        #citySubmit {
+            padding: 20px 15px;
+        }
+    }
 }
