@@ -185,6 +185,7 @@ app.getCuisineType = function(restaurantsObject) {
       app.cuisineMatch(restaurantsObject);
     }
   });
+
 };
 
 //pass city ID from above and dynamically insert it into new AJAX request
@@ -291,6 +292,17 @@ app.displayFinalThree = function(finalThree) {
    
       restaurantItem.append(restName, restRating, restPrice, restReview, restPic);
       $('#restaurantContainer').append(restaurantItem);
+
+      // .......Smooth Scroll to bottom results.........
+      $('#foodSubmit').each(function(){
+          $(this).click(function(){ 
+             $('html,body').animate({ 
+                scrollTop: $('#restaurantContainer').offset().top
+                }, 'slow');
+                return false; 
+              });
+          });
+
    });
   };
 
