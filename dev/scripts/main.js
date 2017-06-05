@@ -213,10 +213,6 @@ app.searchForCity = function(cityInformation) {
       app.restaurants = res.restaurants;
       let rest = res.restaurants;
       app.getCuisineType(rest);
-      // error here, this is undefined? where does it come from?
-      app.getCuisineType(restaurantsObject);
-      console.log(app.restaurants);
-      console.log(res);
     });
   } else {
     //if cityInformation is NOT an array (not lon/lat), insert the city ID
@@ -235,13 +231,12 @@ app.searchForCity = function(cityInformation) {
           sort: 'rating',
           order: 'desc'
           }
-      })
-}.then(function(res){
-        app.restaurants = res.restaurants;
-        let rest = res.restaurants;
-        app.getCuisineType(rest);
-    })
-  }
+      }).then(function(res) {
+      app.restaurants = res.restaurants;
+      let rest = res.restaurants;
+      app.getCuisineType(rest);
+    });
+    }
 };
 
 
