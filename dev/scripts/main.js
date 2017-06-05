@@ -185,6 +185,7 @@ app.getCuisineType = function(restaurantsObject) {
       app.cuisineMatch(restaurantsObject);
     }
   });
+
 };
 
 //pass city ID from above and dynamically insert it into new AJAX request
@@ -254,6 +255,15 @@ app.cuisineMatch = function(restaurantRes) {
   });
   //new array with top three results
   app.displayFinalThree(app.finalThree);
+
+  // Create custom icon for restaurants
+  app.restaurantIcon = L.icon({
+    iconUrl: "public/assets/fork.svg",
+    iconSize: [100, 100], // dimensions of the icon
+    iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
+    popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
+  });
+
   // create markers for top three results
   app.finalThree.forEach(function(finalRest) {
     var restMarker = L.marker(
@@ -268,30 +278,36 @@ app.cuisineMatch = function(restaurantRes) {
   var boundGroup = L.featureGroup(app.restaurantMarkers);
   app.myMap.fitBounds(boundGroup.getBounds());
 
-  // Create custom icon for restaurants
-  app.restaurantIcon = L.icon({
-    iconUrl: "public/assets/fork.svg",
-    iconSize: [100, 100], // dimensions of the icon
-    iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
-    popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
-  });
+ ///old placement of app.restaurantIcon
 };
 
  
-//append to the restaurantContainer in APP (.forEach)
+//append to the restaurantContainer in APP (.forEACH)
 app.displayFinalThree = function(finalThree) {
   app.finalThree.forEach(function(finalThree) {
-      $('#restaurantContainer').empty();
+      $('restaurantItem').remove();
       const restaurantItem = $('<li>').addClass('restaurantItem');
      
+      const restPic = $('<img class="restaurantImage">').attr('src', finalThree.featured_image);
       const restName = $('<p class="restaurantName">').text(finalThree.name);
       const restRating = $('<p class="restaurantRating">').text(`Rating: ${finalThree.user_rating.aggregate_rating}`);
       const restPrice = $('<p class="restaurantPrice">').text(finalThree.currency);
-      const restReview = $('<a class="restaurantReview">Review More</a>').attr("href",finalThree.url).attr("target", "_blank");
-      const restPic = $('<img>').attr('src', finalThree.featured_image);
+      const restReview = $('<a class="restaurantReview">More info & Reviews</a>').attr("href",finalThree.url).attr("target", "_blank");
+      
    
       restaurantItem.append(restName, restRating, restPrice, restReview, restPic);
       $('#restaurantContainer').append(restaurantItem);
+
+      // .......Smooth Scroll to bottom results.........
+      $('#foodSubmit').each(function(){
+          $(this).click(function(){ 
+             $('html,body').animate({ 
+                scrollTop: $('#restaurantContainer').offset().top
+                }, 'slow');
+                return false; 
+              });
+          });
+
    });
   };
 
