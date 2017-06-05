@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Project Five</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
-   integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
-   crossorigin=""/>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link rel="stylesheet" href="public/styles/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+	<meta charset="UTF-8">
+	<title>Project Five</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+	integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+	crossorigin=""/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="public/styles/style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+ </head>
 <body>
 	<header>
 
 
 		<div class="wrapper clearfix">
 			<h1 class="animated bounceInDown">Nom. Nom.</h1>
-			<form action="" id="form" class="clearfix">
-				<div class="formTop" class="clearfix">
+			<form action="" id="form clearfix">
+				<div class="formTop clearfix">
 					<div class="locator_container">
 						<button type="button" class="locator">Find My Location</button>
 					</div>
 					<span>- OR -</span>
-					<div class="cityInput_container" class="clearfix">
+					<div class="cityInput_container clearfix">
 						<label for="cityInput"></label>
 						<input id="cityInput" placeholder="Type my city">
 						<button type="button" id="citySubmit">Find</button>
@@ -32,7 +32,7 @@
 			      		</div>
 		      		</div>
 				</div>
-				<div class="formBottom" class="clearfix">
+				<div class="formBottom clearfix">
 					<div class="cuisineInput_container clearfix">
 						<label for="cusineInput"></label>
 						<!-- <input id="cusineInput" placeholder="I feel like eating..."> -->
@@ -40,11 +40,13 @@
 							<select class="food" id="cuisine">
 								<option selected="selected">Pick a Cuisine</option>
 							</select>
-								<button type="button" id="foodSubmit">Feed Me!</button>
+
+							<button type="button" id="foodSubmit">Feed Me!</button>
 						</div>
 			      		<ul class="cityChoices"></ul>
 		      		</div>
-					
+				
+
 					<input type="submit" id="formSubmit" value="Reset!">
 				</div>
 			</form>
@@ -54,6 +56,7 @@
 		<div class="wrapper clearfix">
 			<ul id="restaurantContainer">
 				<!-- here we will dynamically append the 3 top restaurants -->
+
 					<li class="restaurantItem">
 						<div class="restaurantInfo">
 

@@ -10,6 +10,7 @@
     font-family: Enyo-Slab_Medium;
     src: url(enyo_slab/Enyo-Slab_Medium.otf);
 }
+
 // HEADER ****
 header {
     height: 100vh;
@@ -20,14 +21,15 @@ header {
         font-family: Enyo-Slab_Medium;
         font-size: 60px;
         padding: 10px;
-        margin-left: 50px;
+        margin: 5%;
         letter-spacing: 3px;
+        text-align: center;
     }
 }
 // FORM ****
 form {
     width: 90%;
-    margin: 50px auto 0 auto;
+    margin: auto;
     input, button, select {
         display: block;
         font-family: $bodyFont;
@@ -42,27 +44,29 @@ form {
         margin: 0 auto;
         clear: both;
     }
-    .formTop {
-        height: 20vh;
-    }
-    .cityInput_container, .locator_container {
+    .locator_container {
         float: left;
+        width: 33.3%;
     }
     .cityInput_container {
+        float: left;
         margin: 0 auto;
+        width: 33.3%;
+        position: relative;
     }
     .cuisineInput_container {
         clear: both;
         margin: 0 auto;
-        width: 40%;
+        width: 33.3%;
     }
     #cityInput {
         float: left;
         margin: 0 auto;
-        padding: 20px 30px;
+        padding: 20px 15px;
         font-size: 20px;
         border: 3px solid $mainGreen;
         text-align: center;
+        position: relative;
         &::placeholder {
             color: $mainGreen;
             font-weight: 700;
@@ -70,12 +74,14 @@ form {
     }
     #citySubmit {
         float: left;
-        padding: 20px 30px;
+        padding: 20px 15px;
         font-size: 20px;
         background: $mainGreen;
         border: 3px solid $mainGreen;
         color: white;
         text-shadow: 1px 1px 0 $mainBlack;
+        position: absolute;
+        left: 245px;
     }
     .selectStyled {
         float: left;
@@ -85,6 +91,10 @@ form {
     }
     .citySelect {
         display: none;
+        width: 330px;
+        #items {
+            width: 300px;
+        }
     }
     .citySelectShow{
         display: block;
@@ -98,7 +108,7 @@ form {
         }
     }
     .locator {
-        padding: 20px 30px;
+        padding: 20px 15px;
         background: $mainGreen;
         color: white;
         text-shadow: 1px 1px 0 $mainBlack;
@@ -116,7 +126,7 @@ form {
     }
     .foodSelect {
         width: 100%;
-        margin: 75px auto 0 auto;
+        margin: 18% auto;
     }
     #cuisine {
         width: 100%;
@@ -129,6 +139,7 @@ form {
         font-weight: 700;
         margin-top: 25px;
         text-align: center;
+        width: 33.3%;
     }
     #formSubmit {
         padding: 20px 30px;
@@ -140,7 +151,7 @@ form {
         font-size: 20px;
         border: 3px solid transparent;
         cursor: pointer;
-        margin: 75px auto 0 auto;
+        margin: 1% auto;
         &:hover {
             background: $mainCream;
             color: $mainBlack;
@@ -149,7 +160,6 @@ form {
             animation: bounce 1s;
         }
     }
-}
 // RESTOS ****
 #restaurantContainer {
     width: 50%;
@@ -207,72 +217,123 @@ footer {
 // MEDIA QUERIES ****
 // /* Portrait tablet and small desktops */
 @media (max-width: 940px) {
-form {
-    .cityInput_container, .locator_container {
-        float: none;
-        width: 100%;
+    header h1 {
+        margin: 15% 0;
     }
-    .cityInput_container {
-        margin: 0 auto;
-    }
-    .cuisineInput_container {
-        margin: 40px auto;
-        width: 50%;
-    }
-    #cityInput {
-        float: none;
-        display: inline-block;
-        margin: 0 auto;
-        padding: 20px 30px;
-        font-size: 20px;
-        text-align: center;
-    }
-    #citySubmit {
-        float: none;
-        display: inline-block;
-    }
-    .selectStyled {
-        float: none;
-    }
-    select {
-        padding: 15px;
-        &:focus {
+    form {
+        .formTop {
+            margin: 5% auto;
+        }
+        .cityInput_container, .locator_container {
+            float: none;
+            width: 100%;
+        }
+        .cityInput_container {
+            margin: 0 auto;
+        }
+        .cuisineInput_container {
+            margin: 10% auto;
+            width: 50%;
+        }
+        #cityInput {
+            float: none;
+            // display: inline-block;
+            margin: 0 auto;
+            padding: 20px 30px;
+            font-size: 20px;
+            text-align: center;
+            left: -5%;
+        }
+        #citySubmit {
+            // float: none;
+
+            left: 64%;
+            top: 0;
+        }
+        .selectStyled {
+            float: none;
+            width: 50%;
+            margin: 0 auto;
+
+            #items {
+                margin: 0 auto;
+            }
+        }
+        select {
             padding: 15px;
+            &:focus {
+                padding: 15px;
+            }
+        }
+        .locator {
+            padding: 20px 30px;
+        }
+        .foodSelect {
+            width: 100%;
+            margin: 5% auto;
+
+            #cuisine {
+                width: 68%;
+                margin: auto;
+                text-align: center;
+
+                option {
+                    margin: 0 auto;
+                    text-align: center;
+                }
+            }
+        }
+        span {
+            float: none;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            margin: 5% auto;
         }
     }
-    .locator {
-        padding: 20px 30px;
+    .app .wrapper{
+        margin-top: 10%;
     }
-    .foodSelect {
-        width: 100%;
-        margin: 75px auto 0 auto;
-    }
-    span {
-        float: none;
-        display: inline-block;
-        width: 100%;
-        text-align: center;
-    }
-}
 }
 // /* Landscape phone to portrait tablet */
 @media (max-width: 768px) {
-    #mapContainer {
-    height: 300px;
-    width: 100%;
-    float: none;
-}
-#restaurantContainer {
-    width: 100%;
-    float: none;
-    }
+
+  
 }
 // /* Landscape phones and down */
 @media (max-width: 480px) {
+    
+    header h1 {
+        font-size: 48px;
+    }
+
     form {
         width: 100%;
+
+        .locator {
+            padding: 15px 30px;
+        }
         #citySubmit {
-            padding: 20px 15px;
+            padding: 15px 0;
+            left: 73%;
+        }
+        #cityInput {
+            padding: 15px 0;
+            left: -9%
+        }
+        #formSubmit {
+            padding: 15px 20px;
+        }
+
+        .foodSelect {
+            margin: 0;
+
+            #cuisine {
+                padding: 0;
+                font-size: 12px;
+                width: 100%;
+                margin: 0;
+            }
         }
     }
 }
