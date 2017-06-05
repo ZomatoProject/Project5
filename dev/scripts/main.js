@@ -244,12 +244,6 @@ app.searchForCity = function(cityInformation) {
         app.restaurants = res.restaurants;
         let rest = res.restaurants;
         app.getCuisineType(rest);
-<<<<<<< HEAD
-        app.getCuisineType(restaurantsObject);
-        // console.log(app.restaurants);
-        // console.log(res);
-=======
->>>>>>> 7cba25db79353609374916706efbe0172cbdbc4b
       })
   }
 };
@@ -258,17 +252,12 @@ app.searchForCity = function(cityInformation) {
 
 app.cuisineMatch = function (restaurantRes){
   restaurantRes.forEach(function(res){
-=======
-app.cuisineMatch = function(restaurantRes) {
-  restaurantRes.forEach(function(res) {
->>>>>>> 7cba25db79353609374916706efbe0172cbdbc4b
     if (res.restaurant.cuisines === app.cuisineSelected) {
       app.restaurantsByCuisine.push(res.restaurant);
 
       app.finalThree = app.restaurantsByCuisine.slice(0, 3);
     }
-<<<<<<< HEAD
-  })
+  });
 
   //new array with top three results
   app.finalThree = app.restaurantsByCuisine.slice(0, 3);
