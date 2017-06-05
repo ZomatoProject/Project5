@@ -104,10 +104,8 @@ app.getCityByName = function(name) {
     for (var i = 0; i < cityNameArray.length; i++) {
       //push cities into array
       app.possibleCities.push(cityNameArray[i].name);
-      // console.log(cityNameArray);
       app.possibleCitiesId.push(cityNameArray[i].id);
     }
-    // console.log(possibleCitiesId);
     //append cities to page
     let cityOptions = "";
     for (var i = 0; i < app.possibleCities.length; i++) {
@@ -121,7 +119,7 @@ app.getCityByName = function(name) {
     //store selected ID into variable and pass it as argument into next function
     $("#items").on("change", function() {
       if ($(this).find("option:selected").val() === "choice") {
-        // console.log("Choose a city!");
+          console.log("Choose a city!");
       } else {
         let optionSelected = $(this).find("option:selected").val();
         let cityIdOfSelected = $(this).find("option:selected").data("id");
@@ -140,9 +138,9 @@ app.updateCity = function() {
     //pass in city input to cities AJAX request
     app.getCityByName(inputOfCity);
     $("#items").find("option").remove();
-
     //reset dropdown of cuisines to zero if new location is selected
     $("#cuisine").find("option").remove();
+    $(".citySelect").addClass("citySelectShow");
     //resets array of possibleCities to zero
     app.cuisinesList.length = 0;
     app.possibleCities.length = 0;
@@ -161,7 +159,6 @@ app.getCuisineType = function(restaurantsObject) {
     app.unfilteredCuisinesList.push(eachCuisineType);
   }
   //delete duplicates in array using onlyUnique function below
-
   app.uniqueCuisineList = app.unfilteredCuisinesList.filter(function(
     value,
     index,
@@ -194,9 +191,7 @@ app.getCuisineType = function(restaurantsObject) {
 //searches for city by ID and returns radius, count and cuisines nearby
 app.searchForCity = function(cityInformation) {
   //.constructor is checking for the type of data of cityInformation (whether it's an array or an integer)
-  console.log('searcForCity cityInformation is set to ', cityInformation);
   if (cityInformation.constructor === Array) {
-    // console.log(cityInformation);
     return $.ajax({
       url: "https://developers.zomato.com/api/v2.1/search",
       method: "GET",
@@ -204,7 +199,6 @@ app.searchForCity = function(cityInformation) {
       headers: {
         "user-key": app.apiKey
       },
-
       data: {
         entity_type: "city",
         lat: `${cityInformation[0]}`, //lat depending on which order it's in array
@@ -241,16 +235,12 @@ app.searchForCity = function(cityInformation) {
           order: 'desc'
           }
       })
-};
-$.when(searchForCity()).then(function(res) {
-      // app.restaurants = res.restaurants;
-      let rest = res.restaurants;
-      app.getCuisineType(rest);
-      // error here, this is undefined? where does it come from?
-      app.getCuisineType(restaurantsObject);
-      console.log(app.restaurants);
-      console.log(res);
-    });
+}.then(function(res){
+        app.restaurants = res.restaurants;
+        let rest = res.restaurants;
+        app.getCuisineType(rest);
+    })
+  }
 };
 
 
@@ -260,7 +250,6 @@ app.cuisineMatch = function(restaurantRes) {
       app.restaurantsByCuisine.push(res.restaurant);
 
       app.finalThree = app.restaurantsByCuisine.slice(0, 3);
-      // console.log(app.finalThree);
     }
   });
   //new array with top three results
@@ -288,98 +277,25 @@ app.cuisineMatch = function(restaurantRes) {
   });
 };
 
-//append to the restaurantContainer in APP (long way)
+ 
+//append to the restaurantContainer in APP (.forEach)
 app.displayFinalThree = function(finalThree) {
-  $("restaurantContainer").remove();
-  const restaurantItemOne = $("<li>").addClass("restaurantItemOne");
-  const restaurantItemTwo = $("<li>").addClass("restaurantTitemTwo");
-  const restaurantItemThree = $("<li>").addClass("restaurantItemThree");
-  //rest one
-  const restName1 = $('<p class="restaurantName">').text(finalThree[0].name);
-  const restRating1 = $('<p class="restaurantRating">').text(
-    `Rating: ${finalThree[0].user_rating.aggregate_rating}`
-  );
-  const restPrice1 = $('<p class="restaurantPrice">').text(
-    finalThree[0].currency
-  );
-  const restReview1 = $('<a class="restaurantReview">Review More</a>')
-    .attr("herf", finalThree[0].url)
-    .attr("target", "_blank");
-  const restPic1 = $("<img>").attr("src", finalThree[0].featured_image);
+  app.finalThree.forEach(function(finalThree) {
+      $('#restaurantContainer').empty();
+      const restaurantItem = $('<li>').addClass('restaurantItem');
+     
+      const restName = $('<p class="restaurantName">').text(finalThree.name);
+      const restRating = $('<p class="restaurantRating">').text(`Rating: ${finalThree.user_rating.aggregate_rating}`);
+      const restPrice = $('<p class="restaurantPrice">').text(finalThree.currency);
+      const restReview = $('<a class="restaurantReview">Review More</a>').attr("href",finalThree.url).attr("target", "_blank");
+      const restPic = $('<img>').attr('src', finalThree.featured_image);
+   
+      restaurantItem.append(restName, restRating, restPrice, restReview, restPic);
+      $('#restaurantContainer').append(restaurantItem);
+   });
+  };
 
-  // //rest two
-  const restName2 = $('<p class="restaurantName">').text(finalThree[1].name);
-  const restRating2 = $('<p class="restaurantRating">').text(
-    `Rating: ${finalThree[1].user_rating.aggregate_rating}`
-  );
-  const restPrice2 = $('<p class="restaurantPrice">').text(
-    finalThree[1].currency
-  );
-  const restReview2 = $('<a class="restaurantReview">Review More</a>')
-    .attr("herf", finalThree[1].url)
-    .attr("target", "_blank");
-  const restPic2 = $("<img>").attr("src", finalThree[1].featured_image);
 
-  //rest three
-  const restName3 = $('<p class="restaurantName">').text(finalThree[2].name);
-  const restRating3 = $('<p class="restaurantRating">').text(
-    `Rating: ${finalThree[2].user_rating.aggregate_rating}`
-  );
-  const restPrice3 = $('<p class="restaurantPrice">').text(
-    finalThree[2].currency
-  );
-  const restReview3 = $('<a class="restaurantReview">Review More</a>')
-    .attr("herf", finalThree[2].url)
-    .attr("target", "_blank");
-  const restPic3 = $("<img>").attr("src", finalThree[2].featured_image);
-
-  restaurantItemOne.append(
-    restName1,
-    restRating1,
-    restPrice1,
-    restReview1,
-    restPic1
-  );
-
-  restaurantItemTwo.append(
-    restName2,
-    restRating2,
-    restPrice2,
-    restReview2,
-    restPic2
-  );
-
-  restaurantItemThree.append(
-    restName3,
-    restRating4,
-    restPrice3,
-    restReview3,
-    restPic3
-  );
-
-  $("#restaurantContainer").append(
-    restaurantItemOne,
-    restaurantItemTwo,
-    restaurantItemThree
-  );
-};
-
-// Append using T E M P L A T E (failed)
-// app.displayFinalThree = function(post) {
-//     var postsContainer = $('#restaurantContainer');
-//     var postTemplate = $('#postTemplate').html();
-//     app.finalThree.forEach(function(post){
-//       var templateItem = $(postTemplate);
-
-//       templateItem.find('.restaurantName').text(post.name);
-//       templateItem.find('.restaurantRating').text(post.user_rating.aggregate_rating);
-//       templateItem.find('.restaurantPrice').text(post.currency);
-//       templateItem.find('.restaurantReview').attr('src', post.url);
-//       //append to DOM
-//       postTemplate.append(templateItem);
-//     });
-// };
-// template end
 
 //geolocation event handler
 app.events = function() {

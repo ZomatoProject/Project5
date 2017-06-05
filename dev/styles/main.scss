@@ -43,24 +43,24 @@ form {
 	}
 	.formTop, .formBottom {
 		width: 100%;
+		margin: 0 auto;
 	}
 
 	.cuisineInput_container, .cityInput_container {
 		margin: 0 auto;
 	}
 
+	.cityInput_container, .locator_container {
+		width: 40%;
+		float: left;
+	}
+
 	.cityInput_container {
-		width: 40%;
-		float: left;
+		margin: 0 auto;
 	}
-	
-	.locator_container {
-		width: 40%;
-		float: left;
-	}
+
 	.cuisineInput_container {
 		clear: both;
-		width: 40%;
 		margin: 0 auto;
 	}
 	#cityInput {
@@ -90,6 +90,14 @@ form {
 		padding: 15px;
 		background-color: #F3F4E9;
 	}
+
+	.citySelect {
+		display: none;
+	}
+
+	.citySelectShow{
+		display: block;
+	}
 	select {
 		background: transparent;
 		border: none;
@@ -115,6 +123,13 @@ form {
 			border: 3px solid $mainGreen;
 		}
 	}
+
+	.foodSelect {
+		width: 40%;
+		margin: 0 auto;
+		margin: 20px;
+	}
+
 	span {
 		float: left;
 		font-family: Enyo-Slab_Medium;
