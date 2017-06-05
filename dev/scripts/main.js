@@ -11,16 +11,7 @@ app.possibleCitiesId = [];
 app.unfilteredCuisinesList = [];
 app.cuisinesList = [];
 app.restaurantsByCuisine = [];
-
-app.finaleThree = [];
-
-// console.log(app.restaurantsByCuisine);
-
-
-
-
 app.restaurantMarkers = [];
-
 
 //ask user for geolocation
 app.getGeolocation = function() {
@@ -248,103 +239,14 @@ app.searchForCity = function(cityInformation) {
   }
 };
 
-
-app.cuisineMatch = function (restaurantRes){
-  restaurantRes.forEach(function(res){
+app.cuisineMatch = function(restaurantRes) {
+  restaurantRes.forEach(function(res) {
     if (res.restaurant.cuisines === app.cuisineSelected) {
       app.restaurantsByCuisine.push(res.restaurant);
 
       app.finalThree = app.restaurantsByCuisine.slice(0, 3);
     }
   });
-
-  //new array with top three results
-  app.finalThree = app.restaurantsByCuisine.slice(0, 3);
-    // console.log(app.finalThree);
-    console.log(app.finalThree);
-    app.displayFinalThree(app.finalThree);
-    app.displayMap(app.finalThree);
-    // console.log(app.finalThree);
-};
-
-// console.log(app.finalThree);
-
-app.displayFinalThree = function(finalResults) {
-  // var postsContainer = $('#restaurantContainer');
-
-    finalResults.forEach(function(post){
-
-     
-    
-      var postTemplate = $('#postTemplate').html();
-      
-      var compiledTemplate = Handlebars.compile(postTemplate);
-          // console.log(post.name);
-
-          var resultInfo = {
-            name: post.name,
-            rating: post.user_rating.aggregate_rating,
-            price: post.currency,
-            review: post.url,
-            image: post.thumb
-          }
-          var resultInfoFinal = compiledTemplate(resultInfo);
-
-          $('.resultsContainer').append(resultInfoFinal);
-    });
-
-};
-
- // append the 3 restaurants into the templates created
-// app.displayFinalThree = function(post) {
-//     var postsContainer = $('#restaurantContainer');
-//     var postTemplate = $('#postTemplate').html();
-//     app.finalThree.forEach(function(post){
-//       var templateItem = $(postTemplate);
-//       templateItem.find('.restaurantName').text(post.name);
-//       templateItem.find('.restaurantRating').text(post.user_rating.aggregate_rating);
-//       templateItem.find('.restaurantPrice').text(post.currency);
-//       templateItem.find('.restaurantReview').attr('src', post.url);
-//       //append to DOM
-//       postTemplate.append(templateItem);
-//     });
-// };
-
-
-app.displayMap = function (res){
-
-      res.forEach(function(finalRest){
-          var restMarker = L.marker([finalRest.location.latitude, finalRest.location.longitude], {icon: app.restaurantIcon}, {title: finalRest.name}).bindPopup(finalRest.name);
-          // console.log(restMarker);
-          app.restaurantMarkers.push(restMarker);
-          restMarker.addTo(app.myMap);
-
-          console.log(app.myMap)
-          var boundGroup = L.featureGroup(app.restaurantMarkers);
-          app.myMap.fitBounds(boundGroup.getBounds());
-        });
-
-      // Create custom icon for restaurants 
-      app.restaurantIcon = L.icon({
-          iconUrl: 'public/assets/fork.svg', 
-          iconSize: [100, 100], // dimensions of the icon
-          iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
-          popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
-      });
-
-};
-
-
-
-
-
-// var marker = L.marker([park.geometry.location.lat, park.geometry.location.lng], {icon: podApp.leafIcon}, {title: park.name}).bindPopup(park.name);
-//         // lat: park.geometry.location.lat,
-//         // lng: park.geometry.location.lng
-//         podApp.parksArray.push(marker);
-//         marker.addTo(podApp.myMap);
-
-
   //new array with top three results
   app.displayFinalThree(app.finalThree);
 
@@ -370,16 +272,8 @@ app.displayMap = function (res){
   var boundGroup = L.featureGroup(app.restaurantMarkers);
   app.myMap.fitBounds(boundGroup.getBounds());
 
-<<<<<<< HEAD
-  // Create custom icon for restaurants
-  app.restaurantIcon = L.icon({
-    iconUrl: "public/assets/fork.svg",
-    iconSize: [100, 100], // dimensions of the icon
-    iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
-    popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
-  });
-
-
+ ///old placement of app.restaurantIcon
+};
 
  
 //append to the restaurantContainer in APP (.forEACH)
@@ -396,9 +290,9 @@ app.displayFinalThree = function(finalThree) {
    
       restaurantItem.append(restName, restRating, restPrice, restReview, restPic);
       $('#restaurantContainer').append(restaurantItem);
+      
    });
   };
-
 
 
 
