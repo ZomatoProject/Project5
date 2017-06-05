@@ -248,7 +248,6 @@ app.searchForCity = function(cityInformation) {
   }
 };
 
-<<<<<<< HEAD
 
 app.cuisineMatch = function (restaurantRes){
   restaurantRes.forEach(function(res){
@@ -344,8 +343,8 @@ app.displayMap = function (res){
 //         // lng: park.geometry.location.lng
 //         podApp.parksArray.push(marker);
 //         marker.addTo(podApp.myMap);
-=======
-  });
+
+
   //new array with top three results
   app.displayFinalThree(app.finalThree);
   // create markers for top three results
@@ -369,7 +368,7 @@ app.displayMap = function (res){
     iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
     popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
   });
-};
+
 
  
 //append to the restaurantContainer in APP (.forEach)
@@ -388,9 +387,8 @@ app.displayFinalThree = function(finalThree) {
       $('#restaurantContainer').append(restaurantItem);
    });
   };
->>>>>>> 7cba25db79353609374916706efbe0172cbdbc4b
 
-// };
+
 
 
 //geolocation event handler
