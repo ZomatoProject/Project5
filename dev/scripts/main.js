@@ -281,7 +281,7 @@ app.cuisineMatch = function (restaurantRes){
 };
 
  
-//append to the restaurantContainer in APP (long way)
+//append to the restaurantContainer in APP (.forEACH)
 app.displayFinalThree = function(finalThree) {
   app.finalThree.forEach(function(finalThree) {
       $('#restaurantContainer').empty();
