@@ -249,6 +249,15 @@ app.cuisineMatch = function(restaurantRes) {
   });
   //new array with top three results
   app.displayFinalThree(app.finalThree);
+
+  // Create custom icon for restaurants
+  app.restaurantIcon = L.icon({
+    iconUrl: "public/assets/fork.svg",
+    iconSize: [100, 100], // dimensions of the icon
+    iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
+    popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
+  });
+
   // create markers for top three results
   app.finalThree.forEach(function(finalRest) {
     var restMarker = L.marker(
@@ -263,13 +272,7 @@ app.cuisineMatch = function(restaurantRes) {
   var boundGroup = L.featureGroup(app.restaurantMarkers);
   app.myMap.fitBounds(boundGroup.getBounds());
 
-  // Create custom icon for restaurants
-  app.restaurantIcon = L.icon({
-    iconUrl: "public/assets/fork.svg",
-    iconSize: [100, 100], // dimensions of the icon
-    iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
-    popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
-  });
+ ///old placement of app.restaurantIcon
 };
 
  
