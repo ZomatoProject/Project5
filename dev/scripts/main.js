@@ -371,10 +371,10 @@ app.displayMap = function (res){
 
 
  
-//append to the restaurantContainer in APP (.forEach)
+//append to the restaurantContainer in APP (.forEACH)
 app.displayFinalThree = function(finalThree) {
   app.finalThree.forEach(function(finalThree) {
-      $('#restaurantContainer').empty();
+      $('restaurantItem').remove();
       const restaurantItem = $('<li>').addClass('restaurantItem');
      
       const restName = $('<p class="restaurantName">').text(finalThree.name);
