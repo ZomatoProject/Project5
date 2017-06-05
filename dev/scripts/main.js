@@ -248,8 +248,8 @@ app.searchForCity = function (cityInformation){
         let rest = res.restaurants;
         app.getCuisineType(rest);
         app.getCuisineType(restaurantsObject);
-        console.log(app.restaurants);
-        console.log(res);
+        // console.log(app.restaurants);
+        // console.log(res);
       })
   }
 };
@@ -265,7 +265,10 @@ app.cuisineMatch = function (restaurantRes){
   //new array with top three results
   app.finalThree = app.restaurantsByCuisine.slice(0, 3);
     // console.log(app.finalThree);
+    console.log(app.finalThree);
     app.displayFinalThree(app.finalThree);
+    app.displayMap(app.finalThree);
+    // console.log(app.finalThree);
 };
 
 // console.log(app.finalThree);
@@ -275,7 +278,7 @@ app.displayFinalThree = function(finalResults) {
 
     finalResults.forEach(function(post){
 
-      // console.log(post);
+     
     
       var postTemplate = $('#postTemplate').html();
       
@@ -312,29 +315,29 @@ app.displayFinalThree = function(finalResults) {
 // };
 
 
-//new array with top three results
-app.finalThree = app.restaurantsByCuisine.slice(0, 3);
-  console.log(app.finalThree);
-  // create markers for top three results
-app.finalThree.forEach(function(finalRest){
-  var restMarker = L.marker([finalRest.location.latitude, finalRest.location.longitude], {icon: app.restaurantIcon}, {title: finalRest.name}).bindPopup(finalRest.name);
-  
-    app.restaurantMarkers.push(restMarker);
-    restMarker.addTo(app.myMap);
-  });
-    var boundGroup = L.featureGroup(app.restaurantMarkers);
-    app.myMap.fitBounds(boundGroup.getBounds());
+app.displayMap = function (res){
+
+      res.forEach(function(finalRest){
+          var restMarker = L.marker([finalRest.location.latitude, finalRest.location.longitude], {icon: app.restaurantIcon}, {title: finalRest.name}).bindPopup(finalRest.name);
+          // console.log(restMarker);
+          app.restaurantMarkers.push(restMarker);
+          restMarker.addTo(app.myMap);
+
+          console.log(app.myMap)
+          var boundGroup = L.featureGroup(app.restaurantMarkers);
+          app.myMap.fitBounds(boundGroup.getBounds());
+        });
+
+      // Create custom icon for restaurants 
+      app.restaurantIcon = L.icon({
+          iconUrl: 'public/assets/fork.svg', 
+          iconSize: [100, 100], // dimensions of the icon
+          iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
+          popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
+      });
+
 };
 
-
-
-// Create custom icon for restaurants 
-app.restaurantIcon = L.icon({
-    iconUrl: 'public/assets/fork.svg', 
-    iconSize: [100, 100], // dimensions of the icon
-    iconAnchor: [15, -5], // point of the icon which will correspond to marker's location
-    popupAnchor: [0, 14] // point from which the popup should open relative to the anchor
-});
 
 
 
