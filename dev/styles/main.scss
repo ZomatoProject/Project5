@@ -31,7 +31,7 @@ header {
 // FORM ****
 form {
 	width: 90%;
-	margin: 0 auto;
+	margin: 50px auto 0 auto;
 	input, button, select {
 		display: block;
 		font-family: $bodyFont;
@@ -44,14 +44,13 @@ form {
 	.formTop, .formBottom {
 		width: 100%;
 		margin: 0 auto;
+		clear: both;
 	}
-
-	.cuisineInput_container, .cityInput_container {
-		margin: 0 auto;
+	.formTop {
+		height: 20vh;
 	}
 
 	.cityInput_container, .locator_container {
-		width: 40%;
 		float: left;
 	}
 
@@ -62,6 +61,7 @@ form {
 	.cuisineInput_container {
 		clear: both;
 		margin: 0 auto;
+		width: 40%;
 	}
 	#cityInput {
 		float: left;
@@ -125,9 +125,11 @@ form {
 	}
 
 	.foodSelect {
-		width: 40%;
-		margin: 0 auto;
-		margin: 20px;
+		width: 100%;
+		margin: 75px auto 0 auto;
+	}
+	#cuisine {
+		width: 100%;
 	}
 
 	span {
@@ -136,17 +138,20 @@ form {
 		font-size: 24px;
 		letter-spacing: 3px;
 		font-weight: 700;
+		margin-top: 25px;
+		text-align: center;
 	}
 	#formSubmit {
 		padding: 20px 30px;
 		background: $mainGreen;
+		clear: both;
 		color: white;
 		text-shadow: 1px 1px 0 $mainBlack;
 		font-weight: 700;
 		font-size: 20px;
 		border: 3px solid transparent;
 		cursor: pointer;
-		margin: 0 auto;
+		margin: 75px auto 0 auto;
 		&:hover {
 			background: $mainCream;
 			color: $mainBlack;
@@ -189,4 +194,83 @@ form {
 	height: 500px;
 	width: 50%;
 	float: left;
+}
+
+
+// MEDIA QUERIES ****
+
+/* Portrait tablet and small desktops */
+@media (max-width: 940px) {
+form {
+	.cityInput_container, .locator_container {
+		float: none;
+		width: 100%;
+	}
+	.cityInput_container {
+		margin: 0 auto;
+	}
+	.cuisineInput_container {
+		margin: 40px auto;
+		width: 50%;
+	}
+	#cityInput {
+		float: none;
+		display: inline-block;
+		margin: 0 auto;
+		padding: 20px 30px;
+		font-size: 20px;
+		text-align: center;
+	}
+	#citySubmit {
+		float: none;
+		display: inline-block;
+	}
+	.selectStyled {
+		float: none;
+	}
+	select {
+		padding: 15px;
+		&:focus {
+			padding: 15px;
+		}
+	}
+	.locator {
+		padding: 20px 30px;
+	}
+	.foodSelect {
+		width: 100%;
+		margin: 75px auto 0 auto;
+	}
+
+	span {
+		float: none;
+		display: inline-block;
+		width: 100%;
+		text-align: center;
+	}
+}
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+	#mapContainer {
+	height: 300px;
+	width: 100%;
+	float: none;
+}
+
+#restaurantContainer {
+	width: 100%;
+	float: none;
+	}
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	form {
+		width: 100%;
+		#citySubmit {
+			padding: 20px 15px;
+		}
+	}
 }
