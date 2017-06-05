@@ -97,7 +97,7 @@ app.getCityByName = function(name) {
     },
     data: {
       q: name,
-      count: 20
+      count: 100
     }
   }).then(function(cityMatch) {
     let cityNameArray = cityMatch.location_suggestions;
@@ -215,9 +215,13 @@ app.searchForCity = function(cityInformation) {
         order: "desc"
       }
     }).then(function(res) {
-      // app.restaurants = res.restaurants;
+      app.restaurants = res.restaurants;
       let rest = res.restaurants;
       app.getCuisineType(rest);
+      // error here, this is undefined? where does it come from?
+      app.getCuisineType(restaurantsObject);
+      console.log(app.restaurants);
+      console.log(res);
     });
   } else {
     //if cityInformation is NOT an array (not lon/lat), insert the city ID
@@ -237,17 +241,8 @@ app.searchForCity = function(cityInformation) {
           order: 'desc'
           }
       })
-      .then(function(res){
-        app.restaurants = res.restaurants;
-        let rest = res.restaurants;
-        app.getCuisineType(rest);
-        app.getCuisineType(restaurantsObject);
-        console.log(app.restaurants);
-        console.log(res);
-      })
-  }
 };
-.then(function(res) {
+$.when(searchForCity()).then(function(res) {
       // app.restaurants = res.restaurants;
       let rest = res.restaurants;
       app.getCuisineType(rest);
@@ -256,8 +251,8 @@ app.searchForCity = function(cityInformation) {
       console.log(app.restaurants);
       console.log(res);
     });
-  }
 };
+
 
 app.cuisineMatch = function(restaurantRes) {
   restaurantRes.forEach(function(res) {
