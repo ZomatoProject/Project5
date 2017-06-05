@@ -20,14 +20,17 @@ header {
         font-family: Enyo-Slab_Medium;
         font-size: 60px;
         padding: 10px;
-        margin-left: 50px;
+        // margin-left: 50px;
+        margin: 5%;
         letter-spacing: 3px;
+        text-align: center;
     }
 }
 // FORM ****
 form {
     width: 90%;
-    margin: 50px auto 0 auto;
+    // margin: 50px auto 0 auto;
+    margin: auto;
     input, button, select {
         display: block;
         font-family: $bodyFont;
@@ -43,26 +46,34 @@ form {
         clear: both;
     }
     .formTop {
-        height: 20vh;
+        // height: 20vh;
+        // width: 100%;
+        // margin: 0 auto;
     }
-    .cityInput_container, .locator_container {
+    
+    .locator_container {
         float: left;
+        width: 33.3%;
     }
     .cityInput_container {
+        float: left;
         margin: 0 auto;
+        width: 33.3%;
+        position: relative;
     }
     .cuisineInput_container {
         clear: both;
         margin: 0 auto;
-        width: 40%;
+        width: 33.3%;
     }
     #cityInput {
         float: left;
         margin: 0 auto;
-        padding: 20px 30px;
+        padding: 20px 15px;
         font-size: 20px;
         border: 3px solid $mainGreen;
         text-align: center;
+        position: relative;
         &::placeholder {
             color: $mainGreen;
             font-weight: 700;
@@ -70,12 +81,14 @@ form {
     }
     #citySubmit {
         float: left;
-        padding: 20px 30px;
+        padding: 20px 15px;
         font-size: 20px;
         background: $mainGreen;
         border: 3px solid $mainGreen;
         color: white;
         text-shadow: 1px 1px 0 $mainBlack;
+        position: absolute;
+        left: 245px;
     }
     .selectStyled {
         float: left;
@@ -98,7 +111,7 @@ form {
         }
     }
     .locator {
-        padding: 20px 30px;
+        padding: 20px 15px;
         background: $mainGreen;
         color: white;
         text-shadow: 1px 1px 0 $mainBlack;
@@ -129,6 +142,7 @@ form {
         font-weight: 700;
         margin-top: 25px;
         text-align: center;
+        width: 33.3%;
     }
     #formSubmit {
         padding: 20px 30px;
@@ -221,15 +235,18 @@ form {
     }
     #cityInput {
         float: none;
-        display: inline-block;
+        // display: inline-block;
         margin: 0 auto;
         padding: 20px 30px;
         font-size: 20px;
         text-align: center;
+        left: -5%;
     }
     #citySubmit {
-        float: none;
-        display: inline-block;
+        // float: none;
+
+        left: 64%;
+        top: 0;
     }
     .selectStyled {
         float: none;
