@@ -97,7 +97,7 @@ app.getCityByName = function(name) {
     },
     data: {
       q: name,
-      count: 20
+      count: 100
     }
   }).then(function(cityMatch) {
     let cityNameArray = cityMatch.location_suggestions;
@@ -142,6 +142,7 @@ app.updateCity = function() {
     $("#cuisine").find("option").remove();
     $(".citySelect").addClass("citySelectShow");
     //resets array of possibleCities to zero
+    app.cuisinesList.length = 0;
     app.possibleCities.length = 0;
     app.possibleCitiesId.length = 0;
   });
@@ -158,7 +159,6 @@ app.getCuisineType = function(restaurantsObject) {
     app.unfilteredCuisinesList.push(eachCuisineType);
   }
   //delete duplicates in array using onlyUnique function below
-
   app.uniqueCuisineList = app.unfilteredCuisinesList.filter(function(
     value,
     index,
@@ -213,6 +213,10 @@ app.searchForCity = function(cityInformation) {
       app.restaurants = res.restaurants;
       let rest = res.restaurants;
       app.getCuisineType(rest);
+      // error here, this is undefined? where does it come from?
+      app.getCuisineType(restaurantsObject);
+      console.log(app.restaurants);
+      console.log(res);
     });
   } else {
     //if cityInformation is NOT an array (not lon/lat), insert the city ID
@@ -226,19 +230,20 @@ app.searchForCity = function(cityInformation) {
         data: {
           entity_type: 'city',
           entity_id: `${cityInformation}`,
-          radius: 2000,
-          count: 1000,
+          radius: 1000,
+          count: 200,
           sort: 'rating',
           order: 'desc'
           }
       })
-      .then(function(res){
+}.then(function(res){
         app.restaurants = res.restaurants;
         let rest = res.restaurants;
         app.getCuisineType(rest);
-      })
+    })
   }
 };
+
 
 app.cuisineMatch = function(restaurantRes) {
   restaurantRes.forEach(function(res) {
