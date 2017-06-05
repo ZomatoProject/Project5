@@ -282,11 +282,12 @@ app.displayFinalThree = function(finalThree) {
       $('restaurantItem').remove();
       const restaurantItem = $('<li>').addClass('restaurantItem');
      
+      const restPic = $('<img class="restaurantImage">').attr('src', finalThree.featured_image);
       const restName = $('<p class="restaurantName">').text(finalThree.name);
       const restRating = $('<p class="restaurantRating">').text(`Rating: ${finalThree.user_rating.aggregate_rating}`);
       const restPrice = $('<p class="restaurantPrice">').text(finalThree.currency);
-      const restReview = $('<a class="restaurantReview">Review More</a>').attr("href",finalThree.url).attr("target", "_blank");
-      const restPic = $('<img>').attr('src', finalThree.featured_image);
+      const restReview = $('<a class="restaurantReview">More info & Reviews</a>').attr("href",finalThree.url).attr("target", "_blank");
+      
    
       restaurantItem.append(restName, restRating, restPrice, restReview, restPic);
       $('#restaurantContainer').append(restaurantItem);
